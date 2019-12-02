@@ -1,0 +1,40 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">{$weizhi.title}</h3>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body" >
+    <div id="Contentspjax" >
+      <table id="example1" class="table table-bordered table-striped table-hover">
+        <thead>
+        <tr>
+          <th width="200">备份名称</th>
+          <th width="80">卷数</th>
+          <th width="80">压缩</th>
+          <th width="80">数据大小</th>
+          <th width="200">备份时间</th>
+          <th width="120">操作</th>
+        </tr>
+        </thead>
+
+        <tbody>
+          {foreach $list as $ko => $vo}
+            <tr id="{$ko}">
+              <td>{$vo.time|date='Ymd-His'}</td>
+              <td>{$vo.part}</td>
+              <td>{$vo.compress}</td>
+              <td>{$vo.size|format_bytes}</td>
+              <td>{$ko}</td>
+              <td class="action">
+                <!-- <a href="{:url($_c.'/download',['time'=>$vo['time']])}"><i class="fa fa-database"></i> 下载</a>&nbsp;&nbsp;   -->
+                <a href="{:url($_c.'/import',['time'=>$vo['time']])}"><i class="fa fa-database"></i> 还原</a>&nbsp;&nbsp;  
+                <a href="javascript:void(0);" onclick="isdel('您确定要删除这项吗？','{:url($_c.'/del',['time'=>$vo['time']])}');"><i class="fa fa-trash-o"></i> 删除</a>
+              </td>
+            </tr>
+          {/foreach}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- /.box-body -->
+</div>

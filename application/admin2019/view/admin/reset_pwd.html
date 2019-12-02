@@ -1,0 +1,103 @@
+<link rel="stylesheet" href="__STATIC__/admin/adminlte/bower_components/select2/css/select2.min.css">
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="nav-tabs-custom" style="margin-top: 20px;">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#fa-icons-server" data-toggle="tab">修改密碼</a></li>
+        </ul>
+        <div class="tab-content">
+          <!-- Font Awesome Icons -->
+          <div class="tab-pane active" id="fa-icons-server">
+            <form action="{:url($_c.'/'.$_a);}" method="post" name="qxform" id="qxform">
+              <input type="hidden" name="__token__" value="{$Request.token}" />
+
+              <section id="new">
+                <!--<h4 class="page-header">分類信息</h4>-->
+                <div class="row fontawesome-icon-list">
+                  <div class="col-md-3 col-sm-4">
+                    <span style="display: inline-block;width: 20%;text-align: right;">輸入密碼：</span>
+                    <input type="password" style="color: #444444;width: 20%" name="password" value="">
+                    <span style="color: red">*</span>
+                  </div>
+                  <div class="col-md-3 col-sm-4">
+                    <span style="display: inline-block;width: 20%;text-align: right;">再次輸入密碼：</span>
+                    <input type="password" style="color: #444444;width: 20%" name="password2" value="">
+                    <span style="color: red">*</span>
+                  </div>
+                </div>
+              </section>
+
+              <button type="button" class="btn btn-primary" style="margin-top: 30px;margin-left: 100px;" onclick="qxsubmit();">提交</button><span class="icon icon-userqx margin-small" ></span>
+          </form>
+          </div>
+          <!-- /#fa-icons -->
+        </div>
+        <!-- /.tab-content -->
+      </div>
+    </div>
+    <!-- /.col -->
+  </div>
+  <style>
+    .col-sm-4{width: 60%;line-height: 30px;margin-top: 15px;}
+    .col-sm-4 input,.col-sm-4 textarea{text-indent: 10px}
+  </style>
+
+  <script>
+    function qxsubmit() {
+      /*if($('#title').val() == '') {
+          tips('請填寫分類名稱！','.icon-username','title');
+          return false;
+      }
+      if($('#tid').val() <1) {
+          tips('請選擇分類類別！','.icon-tid','tid');
+          return false;
+      }
+      if(typeof($('#pid').val()) =='undefined') {
+          tips('請選擇上級分類！','.icon-pid','pid');
+          return false;
+      }*/
+      document.qxform.submit();
+    }
+    
+    $(function(){
+      $('.select2').select2({
+          language:'zh-CN'
+      });
+
+      // 日期搜索
+      moment.locale('zh-cn');
+      $('#daterange-btn').daterangepicker(
+          {
+              singleDatePicker: true,
+              showDropdowns: true,
+              autoUpdateInput: false,
+
+              timePicker24Hour : true,
+              timePicker : true,
+              locale: {
+                  format: 'YYYY-MM-DD HH:mm:ss',
+                  applyLabel: "確認",
+                  cancelLabel: "取消"
+              },
+
+              {if !empty($info.add_time)}
+                startDate: moment("{$info.add_time}")
+              {else/}
+                startDate: moment()
+              {/if}
+          },
+
+          function (start, end, label) {
+              if(!this.startDate){
+                 $('#daterange-btn span').html('<i class="fa fa-calendar"></i> 當前時間');
+                 $('#add_time').val('{:date('Y-m-d H:i')}');
+              }else{
+                 $('#daterange-btn span').html('<i class="fa fa-calendar"></i> '+start.format('YYYY-MM-DD HH:mm:ss') )
+                  $('#add_time').val(start.format('YYYY-MM-DD HH:mm:ss'));
+              }
+          }
+      )
+    })
+  </script>
+</section>

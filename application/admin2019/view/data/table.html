@@ -1,0 +1,73 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">{$weizhi.title}</h3>
+
+    <div class="box-right">
+      <a href="javascript:;" class="export"><i class="fa fa-edit"></i> 备份数据</a>
+    </div>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body" >
+    <div id="Contentspjax" >
+      <form id="export-form" method="post" action="{:url('export')}">
+      <table id="example1" class="table table-bordered table-striped table-hover">
+        <thead>
+        <tr>
+          <th width="48"><input class="check-all" checked="chedked" type="checkbox" value=""></th>
+          <th>表名</th>
+          <th>描述</th>
+          <th>表引擎</th>
+          <th width="120">数据量</th>
+          <th width="120">数据大小</th>
+          <th width="160">创建时间</th>
+          <th width="120">操作</th>
+        </tr>
+        </thead>
+
+        <tbody>
+          {foreach $list as $ko => $vo}
+            <tr id="{$ko}">
+              <td class="num">
+                  <input class="ids" checked="chedked" type="checkbox" name="tables[]" value="{$vo.name}">
+              </td>
+              <td>{$vo.name}</td>
+              <td>{$vo.comment}</td>
+              <td>{$vo.engine}</td>
+              <td>{$vo.rows}</td>
+              <td>{$vo.data_length|format_bytes}</td>
+              <td>{$vo.create_time}</td>
+              <td class="action">
+              </td>
+            </tr>
+          {/foreach}
+        </tbody>
+      </table>
+      </form>
+    </div>
+  </div>
+  <!-- /.box-body -->
+  <script type="text/javascript">
+    $(function(){
+      //全选的实现
+      $(".check-all").click(function(){
+        $(".ids").prop("checked", this.checked);
+      });
+
+      $(".ids").click(function(){
+        var option = $(".ids");
+        option.each(function(i){
+          if(!this.checked){
+            $(".check-all").prop("checked", false);
+            return false;
+          }else{
+            $(".check-all").prop("checked", true);
+          }
+        });
+      });
+
+      $(".export").click(function(){
+        $("#export-form").submit();
+      });
+    });
+  </script>
+</div>

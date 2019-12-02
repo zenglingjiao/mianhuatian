@@ -1,0 +1,36 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">{$weizhi.title}</h3>
+
+    <div class="box-right">
+      <a href="{:url($_c.'/cityEdit')}"><i class="fa fa-edit"></i> 添加</a>
+    </div>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body" >
+    <div id="Contentspjax" >
+      <table id="example1" class="table table-bordered table-striped table-hover">
+        <thead>
+        <tr>
+          <th>地区编码</th>
+          <th>地区名称</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+          {foreach $list as $ko => $vo}
+            <tr id="{$ko}">
+              <td>{$ko}</td>
+              <td><a href="{:url($_c.'/cityAll',['code'=>$ko])}">{$vo.name}</a></td>
+              <td>
+                <a href="{:url($_c.'/cityEdit',['id'=>$vo.id])}"><i class="fa fa-edit"></i> 修改</a>&nbsp;&nbsp;  
+                <a href="javascript:void(0);" onclick="isdel('您确定要删除这项吗？','{:url($_c.'/cityDel',['id'=>$vo.id])}');"><i class="fa fa-trash-o"></i> 删除</a>
+              </td>
+            </tr>
+          {/foreach}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- /.box-body -->
+</div>

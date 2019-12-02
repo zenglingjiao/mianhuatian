@@ -1,0 +1,46 @@
+      <table id="example1" class="table table-bordered table-striped table-hover">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>名称</th>
+          <th>上级</th>
+
+          <th>是否推荐</th>
+          <th>排序</th>
+
+          <th>更新时间</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+
+        <tbody>
+          {foreach $list as $vo}
+            <tr>
+              <td>{$vo.id}</td>
+              <td>{$vo.title}</td>
+              <td>{$model->cate_arr[$vo.pid]['title']??'缺失'}</td>
+              <td>
+                  {if $vo['ist'] == 1}
+                      <a href="javascript:void(0);" onclick="isdo('确定要取消推荐？','{:url($_c.'/cateAjax',['id'=>$vo['id'],'ist'=>'0'])}',this);">
+                          <i class="fa fa-check"></i>
+                      </a>
+                  {else/}
+                      <a href="javascript:void(0);"  onclick="isdo('确定要推荐这个分类？','{:url($_c.'/cateAjax',['id'=>$vo['id'],'ist'=>'1'])}',this);">
+                          <i class="fa fa-close"></i>
+                      </a>
+                  {/if}
+              </td>
+              <td>
+                <input style="text-align: center;" type="text" tipvalue="cateordertip" size="3" value="{$vo.orders}" onblur="isdo('','{:url($_c.'/cateAjax',['id'=>$vo['id'],'do'=>'orders'])}',this);"/> 
+                <span class="icon icon-cateordertip margin-small" ></span>
+              </td>
+              <td>{$vo.update_time}</td>
+              <td>
+                <a href="{:url($_c.'/cateEdit',['tid'=>$vo['tid'],'id'=>$vo['id']])}"><i class="fa fa-edit"></i> 修改</a>&nbsp;&nbsp;  
+                <a href="javascript:void(0);" onclick="isdel('您确定要删除这个分类吗？','{:url($_c.'/cateDel',['id'=>$vo['id']])}');"><i class="fa fa-trash-o"></i> 删除</a>
+              </td>
+            </tr>
+          {/foreach}
+        </tbody>
+      </table>
+    

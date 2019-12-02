@@ -1,0 +1,58 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">{$weizhi.title}</h3>
+
+  
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body" >
+    <div class="col-sm-6" style="width: 100%">
+        <div class="" style="line-height: 30px;margin-top: 15px;">
+            <div class="form-group">
+              <span style="width: 30%;display: block;float: left;">會員篩選：</span>
+              <input type="text" name="key" class="input-sm pjaxchangge" style="width: 50%;" value="{$param.key|default=''}" placeholder="會員卡號、手機號碼">
+            </div>
+			<div class="form-group">
+			    <form method="post" action="userjoin">
+					<span style="width: 20%;display: block;float: left;">合併：</span>
+					<input type="text" name="userold" class="input-sm" style="width: 30%;" value="{$param.userold|default=''}" placeholder="會員NO">
+					<span style="width: 10%;">合併到</span>
+					<input type="text" name="usernew" class="input-sm" style="width: 30%;" value="{$param.usernew|default=''}" placeholder="會員NO">
+					<span style="width: 10%;"><button type="submit" value="查詢" >確定</button>
+				</form>
+            </div>
+        </div>
+    </div>
+    <div id="Contentspjax" >
+      {include file="info/userajax" /}
+    </div>
+  </div>
+  <!-- /.box-body -->
+</div>
+<script>
+    $(function(){
+        $('.select2').select2({
+            language:'zh-CN'
+        });
+
+        $(".pjaxchangge").change(function(){
+            var selectstr = '?';
+            $(".pjaxchangge").each(function(){
+                var name = $(this).attr('name');
+                var value = $(this).val();
+
+                selectstr = selectstr+name+"="+value+"&";
+            })
+
+            console.log(selectstr)
+            $.pjax({
+                url: "{:url($_c.'/'.$_a)}"+selectstr,
+                container: '#Contentspjax'
+            });
+        });
+
+        $(document).pjax('.pagination li a', '#Contentspjax', { timeout:3000,replace:true,scrollTo:false});
+        $(document).on('pjax:start', function() { NProgress.start(); });
+        $(document).on('pjax:end',   function() { NProgress.done();  });
+    })
+</script>

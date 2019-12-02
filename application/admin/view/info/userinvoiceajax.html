@@ -1,0 +1,62 @@
+        <table id="example1" class="table table-bordered table-striped table-hover">
+            <thead>
+            <tr>
+              <th>NO</th>
+              <th>用戶</th>
+              <th>發票號碼</th>
+              <th>購買日期</th>
+              <th>隨機碼</th>
+              <th>金額</th>
+              <th>狀態</th>
+              <th>描述</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {foreach $list as $vo}
+            <tr>
+              <td>{$vo.id}</td>
+              <td>{$users->getF($vo['uid'],'cardno')}</td>
+              <td>{$vo.no1}-{$vo.no2}</td>
+              <td>{$vo.date}</td>
+              <td>{$vo.code}</td>
+              <td>{$vo.money}</td>
+              <td>{$model->status_arr[$vo.status]}</td>
+              <td>{$vo.msg}</td>
+              <td> 
+                  <a href="javascript:void(0);" onclick="isdel2('您確定要刪除這項嗎？','{:url($_c.'/userinvoiceajaxDel',['id'=>$vo['id']])}',this);"><i class="fa fa-trash-o"></i> 刪除</a>
+              </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+
+        <div class="row">
+          <div class="col-sm-5">
+            <div class="dataTables_info"  role="status" aria-live="polite">
+              <!--Showing 1 to 10 of 57 entries-->
+            </div>
+          </div>
+          <div class="col-sm-7">
+            <div class="dataTables_paginate paging_simple_numbers" >
+                  {$list|raw}
+            </div>
+          </div>
+        </div>
+<script type="text/javascript">
+    function isdel2(str, url, dom) {
+        layer.confirm(str, {
+            btn: ['确定', '取消'] //按钮
+        }, function () {
+            // window.location.href=url;
+            $.get(url, function (d) {
+                // alert(d.msg);
+                layer.closeAll();
+                $(dom).parents('tr').remove();
+            }, 'json');
+        }, function () {
+
+        });
+    }
+        </script>

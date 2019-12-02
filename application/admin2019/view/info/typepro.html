@@ -1,0 +1,66 @@
+<link rel="stylesheet" href="__STATIC__/admin/adminlte/bower_components/select2/css/select2.min.css">
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="nav-tabs-custom" style="margin-top: 20px;">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#fa-icons-server" data-toggle="tab">機率設定</a></li>
+        </ul>
+        <div class="tab-content">
+          <!-- Font Awesome Icons -->
+          <div class="tab-pane active" id="fa-icons-server">
+            <form action="{:url($_c.'/'.$_a);}" method="post" name="qxform" id="qxform" enctype="multipart/form-data">
+              <section id="new">
+                <!--<h4 class="page-header">分類信息</h4>-->
+                <div class="row fontawesome-icon-list">
+                  {foreach $list_cate as $k => $v}
+                  <div class="col-md-3 col-sm-4">
+                    <span style="display: inline-block;width: 20%">{$v['title']}：</span>
+                    <input type="text" style="color: #444444;width: 20%" name="pro_{$v['id']}" value="{$v['pro']}">%
+                  </div>
+                  {/foreach}
+                </div>
+              </section>
+
+              <button type="button" class="btn btn-primary" style="margin-top: 30px;margin-left: 100px;" onclick="qxsubmit();">提交</button><span class="icon icon-userqx margin-small" ></span>
+          </form>
+          </div>
+          <!-- /#fa-icons -->
+        </div>
+        <!-- /.tab-content -->
+      </div>
+    </div>
+    <!-- /.col -->
+  </div>
+  <style>
+    .col-sm-4{width: 60%;line-height: 30px;margin-top: 15px;}
+    .col-sm-4 input,.col-sm-4 textarea{text-indent: 10px}
+  </style>
+
+  <script>
+    function qxsubmit() {
+      num = 0;
+      $("#new input").each(function(index, el) {
+        num += parseInt($(this).val());
+      });
+      if(num!=100){
+        alert("滿幾率必須為100%");
+        return false;
+      }
+
+      /*if($('#title').val() == '') {
+          tips('請填寫分類名稱！','.icon-username','title');
+          return false;
+      }
+      if($('#tid').val() <1) {
+          tips('請選擇分類類別！','.icon-tid','tid');
+          return false;
+      }
+      if(typeof($('#pid').val()) =='undefined') {
+          tips('請選擇上級分類！','.icon-pid','pid');
+          return false;
+      }*/
+      document.qxform.submit();
+    }
+  </script>
+</section>

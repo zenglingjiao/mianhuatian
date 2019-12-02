@@ -1,0 +1,38 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">{$weizhi.title}</h3>
+
+    <div class="box-right">
+      <a href="{:url($_c.'/jumpEdit')}"><i class="fa fa-edit"></i> 添加</a>
+    </div>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body" >
+    <div id="Contentspjax" >
+      <table id="example1" class="table table-bordered table-striped table-hover">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>显示地址</th>
+          <th>内容地址</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+          {foreach $list as $ko => $vo}
+            <tr id="{$ko}">
+              <td>{$vo.id}</td>
+              <td>{$vo.show_url}</td>
+              <td>{$vo.after_url}</td>
+              <td>
+                <a href="{:url($_c.'/jumpEdit',['id'=>$vo['id']])}"><i class="fa fa-edit"></i> 修改</a>&nbsp;&nbsp;  
+                <a href="javascript:void(0);" onclick="isdel('您确定要删除这项吗？','{:url($_c.'/jumpDel',['id'=>$vo['id']])}');"><i class="fa fa-trash-o"></i> 删除</a>
+              </td>
+            </tr>
+          {/foreach}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- /.box-body -->
+</div>

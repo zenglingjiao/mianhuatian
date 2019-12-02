@@ -1,0 +1,56 @@
+      <table id="example1" class="table table-bordered table-striped table-hover">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>参数名</th>
+          <th>参数值</th>
+          <th>描述</th>
+          <th>状态</th>
+          <th>状态</th>
+          <th>添加时间</th>
+          <th>更新时间</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+          {foreach $list as $ko => $vo}
+            <tr id="{$ko}">
+              <td>{$vo.id}</td>
+              <td>{$vo.key}</td>
+              <td>{$vo.value}</td>
+              <td>{$vo.desp}</td>
+              <td>{$model->status_arr[$vo.status]}【{$vo.status}】</td>
+              <td>
+                {if $vo.status == 1}
+                <a href="javascript:void(0);" onclick="isdo('确定不显示吗？','{:url($_c.'/demoAjax',['id'=>$vo['id'],'status'=>'2'])}',this);">
+                    <i class="fa fa-check"></i>
+                </a>
+                {else/}
+                <a href="javascript:void(0);"  onclick="isdo('确定要显示吗？','{:url($_c.'/demoAjax',['id'=>$vo['id'],'status'=>'1'])}',this);">
+                    <i class="fa fa-close"></i>
+                </a>
+                {/if}
+              </td>
+              <td>{$vo.add_time}</td>
+              <td>{$vo.update_time|substr=0,10}</td>
+              <td>
+                <a href="{:url($_c.'/demoEdit',['id'=>$vo['id']])}"><i class="fa fa-edit"></i> 修改</a>&nbsp;&nbsp;  
+                <a href="javascript:void(0);" onclick="isdel('您确定要删除这项吗？','{:url($_c.'/demoDel',['id'=>$vo['id']])}');"><i class="fa fa-trash-o"></i> 删除</a>
+              </td>
+            </tr>
+          {/foreach}
+        </tbody>
+      </table>
+
+      <div class="row">
+        <div class="col-sm-5">
+          <div class="dataTables_info"  role="status" aria-live="polite">
+            <!--Showing 1 to 10 of 57 entries-->
+          </div>
+        </div>
+        <div class="col-sm-7">
+          <div class="dataTables_paginate paging_simple_numbers" >
+                {$list|raw}
+          </div>
+        </div>
+      </div>

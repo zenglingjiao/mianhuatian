@@ -1,0 +1,39 @@
+      <table id="example1" class="table table-bordered table-striped table-hover">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>类型</th>
+          <th>管理员</th>
+          <th>描述</th>
+          
+          <th>添加IP</th>
+          <th>添加时间</th>
+        </tr>
+        </thead>
+        <tbody>
+          {foreach $list as $ko => $vo}
+            <tr id="{$ko}">
+              <td>{$vo.id}</td>
+              <td>{$model->type_arr[$vo.type]}</td>
+              <td>{$model->admin_arr[$vo.uid]['nickname']}</td>
+              <td>{$vo.remark}</td>
+
+              <td>{$vo.add_ip}</td>
+              <td>{$vo.add_time}</td>
+            </tr>
+          {/foreach}
+        </tbody>
+      </table>
+
+      <div class="row">
+        <div class="col-sm-5">
+          <div class="dataTables_info"  role="status" aria-live="polite">
+            <!--Showing 1 to 10 of 57 entries-->
+          </div>
+        </div>
+        <div class="col-sm-7">
+          <div class="dataTables_paginate paging_simple_numbers" >
+                {$list|raw}
+          </div>
+        </div>
+      </div>

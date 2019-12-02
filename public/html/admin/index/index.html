@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>后台管理系统</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="/static/admin/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/static/admin/adminlte/bower_components/font-awesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="/static/admin/adminlte/bower_components/Ionicons/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/static/admin/adminlte/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/static/admin/adminlte/dist/css/skins/_all-skins.min.css">
+    <!--[if lt IE 9]>
+    <script src="/static/admin/adminlte/html5shiv.min.js"></script>
+    <script src="/static/admin/adminlte/respond.min.js"></script>
+    <![endif]-->
+    <!-- jQuery 3 -->
+    <script src="/static/admin/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- jquery 1.11.3 -->
+    <!--<script src="/static/public/jquery.js"></script>-->
+    <!-- Google Font -->
+    <link rel="stylesheet" href="/static/admin/adminlte/googleapis.css">
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!-- Main Header -->
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="/manage.html" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini">后台</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg">后台管理系统</span>
+        </a>
+        <!-- Header Navbar -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+            <!-- Navbar Right Menu -->
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- Messages: style can be found in dropdown.less-->
+                    <li class="dropdown messages-menu">
+                        <!-- Menu toggle button -->
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-mail-reply-all"></i> 其他操作
+                            <span class="label label-success"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <ul class="menu">
+                                    <li><a href="/" target="_blank"><p>网站首页</p></a></li>
+                                    <li><a href="/admin/index/cache.html"><p>清除缓存</p></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- /.messages-menu -->
+                    <!-- Notifications Menu -->
+                    <li class="dropdown notifications-menu">
+                        <!-- Menu toggle button -->
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user-plus"></i> 超级管理员                            <span class="label label-warning"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">登录信息</li>
+                            <li>
+                                <ul class="menu">
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            上次登录时间：2018-08-16 10:06:25<br/>IP：127.0.0.1                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            本次登录时间：2018-08-22 15:38:23<br/>IP：127.0.0.1                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="footer"><a href="/admin/admin/reset_pwd.html">修改密码</a></li>
+                            <li class="footer"><a href="/admin/index/loginout.html">退出登录</a></li>
+                        </ul>
+                    </li>
+                    <!-- Tasks Menu -->
+                    <li class="dropdown tasks-menu">
+                        <!-- Menu Toggle Button -->
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-adjust"></i>
+                            <span class="label label-danger">换主题</span>
+                        </a>
+                        <ul class="dropdown-menu" style="height: 310px;">
+                            <li class="header">点击主题进行切换</li>
+                            <li>
+                                <!-- Inner menu: contains the tasks -->
+                                <ul class="menu" style="overflow: inherit;" >
+                                    <!-- Task item -->
+                                    <li>
+                                        <a href="javascript:void(0);" onclick="qiehuanzhuti('skin-blue');">
+                                            <!-- Task title and progress text -->
+                                            <h3>蓝色</h3>
+                                            <!-- The progress bar -->
+                                            <div class="progress xs" style="height:auto">
+                                                <!-- Change the css width attribute to simulate progress -->
+                                                <div class="progress-bar progress-bar-aqua" style="width:100%;height: 25px;" role="progressbar"
+                                                     aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                    <span class="sr-only">100% Complete</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" onclick="qiehuanzhuti('skin-yellow');">
+                                            <!-- Task title and progress text -->
+                                            <h3>黄色</h3>
+                                            <!-- The progress bar -->
+                                            <div class="progress xs" style="height:auto">
+                                                <!-- Change the css width attribute to simulate progress -->
+                                                <div class="progress-bar progress-bar-aqua" style="width:100%;background-color:yellow;height: 25px;" role="progressbar"
+                                                     aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" >
+                                                    <span class="sr-only">100% Complete</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" onclick="qiehuanzhuti('skin-red');">
+                                            <!-- Task title and progress text -->
+                                            <h3>红色</h3>
+                                            <!-- The progress bar -->
+                                            <div class="progress xs" style="height:auto">
+                                                <!-- Change the css width attribute to simulate progress -->
+                                                <div class="progress-bar progress-bar-aqua" style="width:100%;background-color:red;height: 25px;" role="progressbar"
+                                                     aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                    <span class="sr-only">100% Complete</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" onclick="qiehuanzhuti('skin-purple');">
+                                            <!-- Task title and progress text -->
+                                            <h3>紫色</h3>
+                                            <!-- The progress bar -->
+                                            <div class="progress xs" style="height:auto">
+                                                <!-- Change the css width attribute to simulate progress -->
+                                                <div class="progress-bar progress-bar-aqua" style="width:100%;background-color:purple;height: 25px;" role="progressbar"
+                                                     aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                    <span class="sr-only">100% Complete</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" onclick="qiehuanzhuti('skin-green');">
+                                            <!-- Task title and progress text -->
+                                            <h3>绿色</h3>
+                                            <!-- The progress bar -->
+                                            <div class="progress xs" style="height:auto">
+                                                <!-- Change the css width attribute to simulate progress -->
+                                                <div class="progress-bar progress-bar-aqua" style="width:100%;background-color:green;height: 25px;" role="progressbar"
+                                                     aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                    <span class="sr-only">100% Complete</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <!-- end task item -->
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar Menu -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="header">后台管理栏目</li>
+                <!-- Optionally, you can add icons to the links -->
+                <li class="active menu-open"><a href="/manage.html"><i class="fa fa-bank"></i> <span>后台首页</span></a></li>
+                                   <li class="treeview ">
+                        <a href="javascript:void(0);"><i class="fa  fa-wikipedia-w"></i> <span>【示例】</span>
+                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                                                               <li class="treeview ">
+                                        <a href="javascript:void(0);">
+                                            <i class="fa  fa-cogs"></i> <span>图标</span>
+                                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                                                                             <li class=" "><a href="/admin/demo/tubiao.html"><i class="fa   fa-circle-o"></i> 图标</a></li>
+                                                                                    </ul>
+                                   </li>
+                                                                   <li class="treeview ">
+                                        <a href="javascript:void(0);">
+                                            <i class="fa  fa-cogs"></i> <span>DEMO</span>
+                                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                                                                             <li class=" "><a href="/admin/demo/demoall.html"><i class="fa   fa-circle-o"></i> 全部</a></li>
+                                                                                             <li class=" "><a href="/admin/demo/demolist.html"><i class="fa   fa-circle-o"></i> 列表</a></li>
+                                                                                             <li class=" "><a href="/admin/demo/demoedit.html"><i class="fa   fa-circle-o"></i> 编辑</a></li>
+                                                                                    </ul>
+                                   </li>
+                                                        </ul>
+                    </li>
+                                    <li class="treeview ">
+                        <a href="javascript:void(0);"><i class="fa  fa-cogs"></i> <span>系统设置</span>
+                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                                                                <li class=" active menu-open"><a href="/admin/system/index.html"><i class="fa  fa-circle-o"></i>网站文字</a></li>
+                                                                    <li class=" "><a href="/admin/system/pic.html"><i class="fa  fa-circle-o"></i>网站图片</a></li>
+                                                                    <li class=" "><a href="/admin/system/email.html"><i class="fa  fa-circle-o"></i>网站邮箱</a></li>
+                                                                    <li class=" "><a href="/admin/system/level.html"><i class="fa  fa-circle-o"></i>等级设置</a></li>
+                                                        </ul>
+                    </li>
+                                    <li class="treeview ">
+                        <a href="javascript:void(0);"><i class="fa  fa-book"></i> <span>内容管理</span>
+                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                                                                <li class=" "><a href="/admin/info/typeall.html"><i class="fa  fa-circle-o"></i>分类类别列表</a></li>
+                                                                    <li class=" "><a href="/admin/info/cateall.html"><i class="fa  fa-circle-o"></i>分类列表</a></li>
+                                                                    <li class=" "><a href="/admin/info/bannerall.html"><i class="fa  fa-circle-o"></i>图片列表</a></li>
+                                                                    <li class=" "><a href="/admin/info/articlelist.html"><i class="fa  fa-circle-o"></i>文章列表</a></li>
+                                                        </ul>
+                    </li>
+                                    <li class="treeview ">
+                        <a href="javascript:void(0);"><i class="fa  fa-user"></i> <span>用户管理</span>
+                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                                                                <li class=" "><a href="/admin/user/userlist.html"><i class="fa  fa-circle-o"></i>用户列表</a></li>
+                                                                    <li class=" "><a href="/admin/user/moneylog.html"><i class="fa  fa-circle-o"></i>资金记录</a></li>
+                                                        </ul>
+                    </li>
+                                    <li class="treeview ">
+                        <a href="javascript:void(0);"><i class="fa  fa-cubes"></i> <span>商城管理</span>
+                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                                                                <li class=" "><a href="/admin/market/message.html"><i class="fa  fa-circle-o"></i>评价列表</a></li>
+                                                        </ul>
+                    </li>
+                                    <li class="treeview ">
+                        <a href="javascript:void(0);"><i class="fa  fa-commenting-o"></i> <span>网站留言</span>
+                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                                                                <li class=" "><a href="/admin/message/messagelist.html"><i class="fa  fa-circle-o"></i>留言列表</a></li>
+                                                        </ul>
+                    </li>
+                                    <li class="treeview ">
+                        <a href="javascript:void(0);"><i class="fa  fa-user-plus"></i> <span>权限管理</span>
+                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                                                                <li class=" "><a href="/admin/admin/userall.html"><i class="fa  fa-circle-o"></i>管理员列表</a></li>
+                                                                    <li class=" "><a href="/admin/admin/authall.html"><i class="fa  fa-circle-o"></i>权限组列表</a></li>
+                                                        </ul>
+                    </li>
+                                    <li class="treeview ">
+                        <a href="javascript:void(0);"><i class="fa  fa-reorder"></i> <span>操作日志管理</span>
+                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                                                                <li class=" "><a href="/admin/log/loglist.html"><i class="fa  fa-circle-o"></i>日志列表</a></li>
+                                                        </ul>
+                    </li>
+                                    <li class="treeview ">
+                        <a href="javascript:void(0);"><i class="fa  fa-database"></i> <span>数据库管理</span>
+                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                                                                <li class=" "><a href="/admin/data/table.html"><i class="fa  fa-circle-o"></i>数据表信息</a></li>
+                                                                    <li class=" "><a href="/admin/data/backup.html"><i class="fa  fa-circle-o"></i>备份管理</a></li>
+                                                        </ul>
+                    </li>
+                            </ul>
+            <!-- /.sidebar-menu -->
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <ol class="breadcrumb" style="float: left;position: static;padding-left: 15px;">
+                <li><a href="/manage.html"><i class="fa  fa-home"></i> 后台首页</a></li>
+                            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content container-fluid">
+            <script type="text/javascript" src="/static/layer/layer.js"></script>
+            <script type="text/javascript" src="/static/public/common.js"></script>
+            <script type="text/javascript" src="/static/public/jquery.pjax.min.js"></script>
+            <script type="text/javascript" src="/static/public/nprogress.js"></script>
+            <link rel="stylesheet" href="/static/public/nprogress.css">
+            <script src="/static/admin/adminlte/bower_components/select2/js/select2.min.js"></script>
+            <script src="/static/admin/adminlte/bower_components/select2/js/i18n/zh-CN.js"></script>
+            <link rel="stylesheet" href="/static/admin/adminlte/bower_components/select2/css/select2.min.css">
+
+            <!-- date-range-picker -->
+            <script src="/static/admin/adminlte/bower_components/moment/min/moment.min.js"></script>
+            <script src="/static/admin/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+            <!-- bootstrap datepicker -->
+            <script src="/static/admin/adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+            <script src="/static/admin/adminlte/bower_components/moment/locale/zh-cn.js"></script>
+            <!-- daterange picker -->
+            <link rel="stylesheet" href="/static/admin/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+            <!-- bootstrap datepicker -->
+            <link rel="stylesheet" href="/static/admin/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+
+            <style>
+                #example1 tr:hover{
+                    background-color: #1EA2E3;color: white;
+                }
+                #example1 tr:hover input{
+                    background-color: white;color: #0f0f0f;
+                }
+                #example1 tr:hover td a,#example1 tr:hover td i{
+                    color:#fff;
+                }
+                #example1 thead tr:hover:first-child{background:none;color:#333}
+            </style>
+            <section class="content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="nav-tabs-custom">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#fa-icons" data-toggle="tab">欢迎页面</a></li>
+  </ul>
+  <div class="tab-content">
+    <!-- Font Awesome Icons -->
+    <div class="tab-pane active" id="fa-icons">
+      <section id="new">
+        <h4 class="page-header">登录信息</h4>
+        <div class="row fontawesome-icon-list">
+          <div class="col-md-3 col-sm-4" style="width: 100%;line-height: 40px;">超级管理员，
+            晚上好！          </div>
+          <div class="col-md-3 col-sm-4" style="width: 100%;line-height: 40px;">所属权限组：超级管理员</div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<div class="nav-tabs-custom">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#fa-icons-server" data-toggle="tab">服务器</a></li>
+  </ul>
+  <div class="tab-content">
+    <!-- Font Awesome Icons -->
+    <div class="tab-pane active" id="fa-icons-server">
+      <section id="new-server">
+        <h4 class="page-header">服务器信息</h4>
+        <div class="row fontawesome-icon-list">
+                      <div class="col-md-3 col-sm-4" style="width: 50%;line-height: 40px;">操作系统：Windows NT DESKTOP-U23IT1M 10.0 build 16299 (Windows 10) AMD64</div>
+                      <div class="col-md-3 col-sm-4" style="width: 50%;line-height: 40px;">运行环境：Apache/2.4.23 (Win64) PHP/7.0.10</div>
+                      <div class="col-md-3 col-sm-4" style="width: 50%;line-height: 40px;">PHP运行方式：apache2handler</div>
+                      <div class="col-md-3 col-sm-4" style="width: 50%;line-height: 40px;">PHP版本：7.0.10</div>
+                      <div class="col-md-3 col-sm-4" style="width: 50%;line-height: 40px;">Zend版本：3.0.0</div>
+                      <div class="col-md-3 col-sm-4" style="width: 50%;line-height: 40px;">服务器最大上传：2M</div>
+                      <div class="col-md-3 col-sm-4" style="width: 50%;line-height: 40px;">PHP最大执行时间：120秒</div>
+                      <div class="col-md-3 col-sm-4" style="width: 50%;line-height: 40px;">服务器当前时间：2018年8月23日 18:02:56</div>
+                      <div class="col-md-3 col-sm-4" style="width: 50%;line-height: 40px;">服务器域名/IP：demo.com [ 127.0.0.1 ]</div>
+                      <div class="col-md-3 col-sm-4" style="width: 50%;line-height: 40px;">服务器剩余空间：149.08G</div>
+                  </div>
+      </section>
+    </div>
+    <!-- /#fa-icons -->
+  </div>
+  <!-- /.tab-content -->
+</div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </section>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+</div>
+<!-- Bootstrap 3.3.7 -->
+<script src="/static/admin/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/static/admin/adminlte/dist/js/adminlte.min.js"></script>
+<script>
+    function qiehuanzhuti(value) {
+        try{
+            var is = false;
+            $.ajax({
+                type: 'POST',
+                async: false,
+                url: "/admin/index/setskin.html",
+                data: {skin:value},
+                success: function (data) {
+                    if (data.code == 1) {
+
+                    } else {
+                        is = true;
+                    }
+                    rmsg = data.msg;
+                }
+            });
+            if(is) {
+                throw rmsg;
+            }
+            var skinsall = ['skin-blue','skin-purple','skin-yellow','skin-red','skin-green'];
+            for(var i=0;i<skinsall.length;i++) {
+                $('body').removeClass(skinsall[i]);
+            }
+            $('body').addClass(value);
+        }catch (e){
+            alert(e);
+            return false;
+        }
+    }
+</script>
+<style>
+    body #think_page_trace_open img{display: none}
+    .col-sm-6{padding-bottom: 20px;}
+    .col-md-3{line-height: 30px !important;}
+    .form-group{margin-bottom: 0;}
+    .select2-container--default .select2-selection--single .select2-selection__rendered{line-height: 24px}
+    .btn{padding:6px 30px !important;}
+
+    .box-right {
+        display: inline-block;
+        float: right;
+        margin: 15px 80px;
+    }
+    .box-right a {
+        margin: 0px 10px;
+        border: solid 1px;
+        padding: 8px 25px;
+        background-color: #1EA2E3;
+        color: #fff;
+    }
+    
+    .col-sm-4{ /*width:60%;*/ line-height:30px;margin-top:15px;display: inline-block;}
+    .col-sm-4 label{color:#555;width:auto;font-weight:500}
+    .col-sm-4 input{color:#444444;width:100%;text-indent:10px;}
+    .col-sm-4 textarea{width:100%;line-height: 22px;padding: 5px 10px;}
+</style>
+</body>
+</html>

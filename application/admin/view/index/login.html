@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <title>登錄</title>
+    <link rel="stylesheet" href="__STATIC__/admin/login/base.css">
+    <link rel="stylesheet" href="__STATIC__/admin/login/style.css">
+    <script type="text/javascript" src="__STATIC__/public/jquery.js"></script>
+    <script type="text/javascript" src="__STATIC__/public/jquery.md5.js"></script>
+    <script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__STATIC__/public/common.js"></script>
+</head>
+<body>
+
+    <div class="bg"></div>
+    <div class="container">
+        <div class="line bouncein">
+            <div class="xs6 xm4 xs3-move xm4-move">
+                <div style="height:150px;"></div>
+                <div class="media media-y margin-big-bottom">
+                </div>
+
+                    <div class="panel loginbox">
+                        <div class="text-center margin-big padding-big-top">
+                            <h1>後臺管理中心</h1>
+                        </div>
+                        <div class="panel-body" style="padding:30px; padding-bottom:10px; padding-top:10px;">
+                            <div class="form-group">
+                                <div class="field field-icon-right">
+                                    <input type="text" class="input input-big" name="name" id="username" placeholder="登錄帳號">
+                                    <span class="icon icon-user margin-small" ></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="field field-icon-right">
+                                    <input type="password" class="input input-big" name="password" id="password" placeholder="登錄密碼">
+                                    <span class="icon icon-key margin-small"></span>
+                                </div>
+                            </div>
+                            <!-- <div class="form-group">
+                                <div class="field">
+                                    <input type="text" class="input input-big" name="code" id="code" placeholder="填寫驗證碼">
+                            
+                                    <img src="{:captcha_src()}" alt="" width="100" height="32" id="yanzhengmacode" class="passcode" style="height:43px;cursor:pointer;" onclick="reloadcode('yanzhengmacode')">
+                                </div>
+                            </div> -->
+                        </div>
+                        <div style="padding:30px;">
+                            <input type="button" id="button" class="button button-block bg-main text-big input-big" value="登錄" onclick="adminlogin();">
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+
+<script>
+
+    $(document).keyup(function(event){
+        if(event.keyCode ==13){
+            adminlogin();
+        }
+    });
+
+    var ajax_submit = 0;
+    function adminlogin() {
+        if(ajax_submit != 0) {
+            return false;
+        }
+        ajax_submit = 1;
+        var username = $('#username').val();
+        var pass = $('#password').val();
+        var code = $('#code').val();
+        if(username == '') {
+            tips('請填寫用戶名！','.icon-user','username');
+            return false;
+        }
+        if(pass == '') {
+            tips('請填寫密碼！','.icon-key','password');
+            return false;
+        }
+        /*if(code == '') {
+            tips('請填寫驗證碼！','.passcode','code');
+            return false;
+        }*/
+        try{
+            var is = false;
+            var rmsg = '';
+            $.ajax({
+                type: 'POST',
+                async: false,
+                dataType: 'json',
+                url: "{:url('admin/Index/login')}",
+                data: {username: username,pass:$.md5(pass),code:code},
+                success: function (data) {
+                    if (data.code != 1) {
+                        is = true;
+                        rmsg = data.msg;
+                    }else{
+                        window.location.href="{:url('admin/Index/index')}";
+                    }
+                }
+            });
+
+            if (is) {
+                throw (rmsg);
+            }
+        }catch (e) {
+            tips(e,'.icon-user');
+            return false;
+        }
+    }
+</script>
+    <style>
+        body #think_page_trace_open img{display: none}
+    </style>
+</body>
+</html>

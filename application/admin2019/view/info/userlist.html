@@ -1,0 +1,51 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">{$weizhi.title}</h3>
+
+    <div class="box-right" style="padding-right: 200px;">
+      <a href="{:url($_c.'/userExport')}?{:http_build_query($_GET)}"><i class="fa fa-download"></i> 匯出</a>
+    </div>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body" >
+    <div class="col-sm-6" style="width: 100%">
+        <div class="col-md-5 col-sm-4" style="line-height: 30px;margin-top: 15px;">
+            <div class="form-group">
+              <span style="width: 30%;display: block;float: left;">會員篩選：</span>
+              <input type="text" name="key" class="input-sm pjaxchangge" style="width: 50%;" value="{$param.key|default=''}" placeholder="會員卡號、手機號碼">
+            </div>
+        </div>
+    </div>
+    <div id="Contentspjax" >
+      {include file="info/userajax" /}
+    </div>
+  </div>
+  <!-- /.box-body -->
+</div>
+<script>
+    $(function(){
+        $('.select2').select2({
+            language:'zh-CN'
+        });
+
+        $(".pjaxchangge").change(function(){
+            var selectstr = '?';
+            $(".pjaxchangge").each(function(){
+                var name = $(this).attr('name');
+                var value = $(this).val();
+
+                selectstr = selectstr+name+"="+value+"&";
+            })
+
+            console.log(selectstr)
+            $.pjax({
+                url: "{:url($_c.'/'.$_a)}"+selectstr,
+                container: '#Contentspjax'
+            });
+        });
+
+        $(document).pjax('.pagination li a', '#Contentspjax', { timeout:3000,replace:true,scrollTo:false});
+        $(document).on('pjax:start', function() { NProgress.start(); });
+        $(document).on('pjax:end',   function() { NProgress.done();  });
+    })
+</script>

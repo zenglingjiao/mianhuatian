@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh=TW">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, initial-scale=1.0, user-scalable=no">
+      <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <!--上線後刪除此段Meta與註解-->
+    <meta name="robots" content="noindex, nofollow,noarchive,nosnippet,noimageindex,noodp">
+    <!-- End 測試站防止被爬蟲搜尋-->
+    <title>首頁 | 棉花田</title>
+
+
+    <!-- Bootstrap core CSS -->
+   <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+   <link href="assets/css/animate.css" rel="stylesheet">
+   <link href="assets/libs/datepicker/css/datepicker.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="assets/css/index.css?1.0" rel="stylesheet">
+    <link href="assets/css/index_mobel.css?1.0" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top navbar-tb">
+    <a class="navbar-brand" href="index.html"><img src="assets/images/logo.png" style="height:25px;" /></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">首頁</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link awards" href="javascript:void(0);">活動獎項</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="query.html">查詢紀錄</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="winlist.html">得獎名單</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link attention" href="javascript:void(0);">注意事項</a>
+        </li>
+        <li class="nav-item">
+            {if $uid>0}
+                <a class="nav-link" href="{:url('index/logout')}">登出</a>
+            {else/}
+                <!--<a class="nav-link" href="javascript:void(0);" id="point4">登入</a>-->
+                <a class="nav-link alert-login" href="javascript:void(0);">會員登入</a>
+            {/if}
+
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<div class="main-wrapper  spe-wrapper">
+
+    <div class="banner-wrapper banner">
+        <img src="assets/images/banner.png" class="img-fluid" />
+        <div class="side_float gift_1 wow fadeInUp" data-wow-delay="0.5s"></div>
+        <div class="side_float gift_2 wow fadeInUp" data-wow-delay="0.6s"></div>
+        <div class="side_float gift_3 wow fadeInLeft" data-wow-delay="0.7s"></div>
+        <div class="side_float z_1 wow fadeIn" data-wow-delay="0.6s"></div>
+        <div class="side_float z_2 wow fadeInDown" data-wow-delay="0.6s"></div>
+        <div class="side_float z_3 wow zoomIn" data-wow-delay="0.5s"></div>
+        <div class="side_float z_4 wow zoomIn" data-wow-delay="0.5s"></div>
+        <div class="side_float z_5 wow slideInDown" data-wow-delay="0.5s">
+            <!--程式說明 ※上程式後刪除-->
+            <!--alert-login 為登入前 跳出會員登入畫面-->
+            <!--scroll-login 為登入後 錨點至下方登錄發票-->
+            <a href="javascript:void(0);" class="login scroll-login">登錄發票</a>
+
+        </div>
+    </div>
+
+
+    <section class="conner_wrapper" id="awards">
+        <div class="conner_bg pt-5">
+            <div class="container">
+                <div class="h_box">
+                    <h2 class="h-title wow fadeIn" data-wow-delay="0.3s"><img src="assets/images/h_tice.png" /> 活動獎項</h2>
+                    <div class="block prize1">
+                        <div class="d-flex bd-highlight wow zoomIn" data-wow-delay="0.1s">
+                          <div class="p-2 bd-highlight t_r d-flex justify-content-center align-items-center flex-shrink-0">第一重</div>
+                          <div class="p-2 flex-grow-1 t_w bd-highlight">
+                              <h6>滿 588 元限量紅包線上抽</h6>
+                              <p>活動期間內，單筆消費折扣後每滿 588 元，上網登錄，即享限量紅包好禮抽獎，買越多抽越多！</p>
+                          </div>
+                        </div>
+                        <div class="row prize">
+                            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.3s">
+                                <div class="p_img">
+                                    <img src="assets/images/cp1.png" />
+                                </div>
+                            
+                                <h2>現金抵用券</h2>
+                                <p>5 元 ~ 80 元</p>
+                            </div>
+                            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.4s">
+                                <div class="p_img">
+                                    <img src="assets/images/cp2.png" />
+                                </div>
+                                <h2>免費商品</h2>
+                                <p>有機冬瓜茶、歐特有機鹽焗堅果、歐特有機梅子葡萄乾、Bonomi 白朗尼千層酥...等</p>
+                            </div>
+                            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.5s">
+                                <div class="p_img">
+                                    <img src="assets/images/cp3.png" />
+                                </div>
+                                <h2>加價購商品</h2>
+                                <p>瑞春有機薄鹽黑豆蔭油清、富里有機香米、頂鮮-產銷履歷金目鱸魚排...等</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="block prize2">
+                        <div class="d-flex bd-highlight mb-5 wow zoomIn" data-wow-delay="0.2s">
+                          <div class="p-2 bd-highlight t_r d-flex justify-content-center align-items-center flex-shrink-0">第二重</div>
+                          <div class="p-2 flex-grow-1 t_w bd-highlight">
+                              <h6>飛利浦時尚家電、棉花田禮券加碼抽</h6>
+                              <p>活動期間，已登錄網頁抽獎之會員，加碼再抽飛利浦「新一代健康氣炸鍋」、「智慧萬用電子鍋」、棉花田千元禮券。</p>
+                          </div>
+                        </div>
+                        <div class="row prize justify-content-center">
+                            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.3s">
+                                <div class="p_img">
+                                    <img src="assets/images/cp4.png" />
+                                </div>
+                                <h2>新一代健康氣炸鍋<span class="label label-info">6 名</span></h2>
+                                <p>(HD9642)</p>
+                                <p>市價 $12,900元</p>
+                            </div>
+                            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.4s">
+                                <div class="p_img">
+                                    <img src="assets/images/cp5.png" />
+                                </div>
+                                <h2>智慧萬用電子鍋<span class="label label-info">23 名</span></h2>
+                                <p>(HD2140/2150)</p>
+                                <p>市價 $7,988元</p>
+                            </div>
+                        </div>
+                        <div class="row prize quan">
+                            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.5s">
+                                <div class="p_img">
+                                    <img src="assets/images/cp6.png" />
+                                </div>
+                                <h2>棉花田禮券<span class="label label-info">3 名</span></h2>
+                                <p>$3,000 元</p>
+                            </div>
+                            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.6s">
+                                <div class="p_img">
+                                    <img src="assets/images/cp7.png" />
+                                </div>
+                                <h2>棉花田禮券<span class="label label-info">2 名</span></h2>
+                                <p>$2,000 元</p>
+                            </div>
+                            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.7s">
+                                <div class="p_img">
+                                    <img src="assets/images/cp8.png" />
+                                </div>
+                                <h2>棉花田禮券<span class="label label-info">1 名</span></h2>
+                                <p>$1,000 元</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+
+    <section class="login_fp pt-5" id="login_fp">
+            <div class="container">
+                <div class="h_box">
+                    <h2 class="h-title wow fadeIn" data-wow-delay="0.1s"><img src="assets/images/h_tice.png" /> 登錄發票</h2>
+                    <div class="block">
+                         <p>請輸入您的發票號碼、購買日期、發票隨機碼以及發票金額，單筆發票滿 588 元，即可參加抽紅包活動乙次，單筆發票金額可累計抽獎次數。每一張發票的抽獎次數必須一次抽完。例如，發票金額為 1198 元，則可以抽 2 次紅包，若抽了一個紅包後中途將網頁關閉，則無法重新輸入同一張發票資訊將剩下的次數抽完。</p>
+                
+
+                    </div>
+                    <div class="block">
+                        <div class="row justify-content-center">
+                            <div class="col-md-5 col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
+                                <div class="p_img">
+                                    <img src="assets/images/fpmuban.png" />
+                                </div>
+                            </div>
+                            <div class="col-md-7 col-lg-5 wow fadeInUp" data-wow-delay="0.3s">
+                                <form id="form_enter" method="post">
+                                <div class="d-flex h-100 flex-column bd-highlight mb-3">
+                                  <div class="p-2 bd-highlight">
+                                      <div class="d-flex flex-row bd-highlight fp">
+                                          <div class="p-2 item"><span class="form-control">01</span></div>
+                                          <div class="p-2 item flex-shrink-0">
+                                              <select class="form-control" name="no1_1">
+                                                  <option selected value="A">A</option>
+                                                  <option value="B">B</option>
+                                                  <option value="C">C</option>
+                                                  <option value="D">D</option>
+                                              </select>
+                                          </div>
+                                          <div class="p-2 item flex-shrink-0">
+                                              <select class="form-control" name="no1_2">
+                                                  <option value="A">A</option>
+                                                  <option value="B" selected>B</option>
+                                                  <option value="C">C</option>
+                                                  <option value="D">D</option>
+                                              </select>
+                                          </div>
+                                          <div class="p-2 item">
+                                              <input class="form-control" name="no2" placeholder="000000000" />
+                                          </div>
+                                        </div>
+                                  </div>
+                                  <div class="p-2 bd-highlight">
+                                      <div class="d-flex flex-row bd-highlight fp">
+                                          <div class="p-2 item"><span class="form-control">02</span></div>
+                                          <div class="p-2 item flex-grow-1">
+                                              <input name="date" class="form-control datepicker-here" disabled-keyboard   data-date-format="yyyy/mm/dd" data-language="zh" placeholder="請輸入您的購買日期" />
+                                          </div>
+                                        </div>
+                                  </div>
+                                  <div class="p-2 bd-highlight">
+                                      <div class="d-flex flex-row bd-highlight fp">
+                                          <div class="p-2 item"><span class="form-control">03</span></div>
+                                          <div class="p-2 item flex-grow-1">
+                                              <input name="code" class="form-control" placeholder="請輸入您的發票隨機碼" />
+                                          </div>
+                                        </div>
+                                  </div>
+                                  <div class="p-2 bd-highlight">
+                                      <div class="d-flex flex-row bd-highlight fp">
+                                          <div class="p-2 item"><span class="form-control">04</span></div>
+                                          <div class="p-2 item flex-grow-1">
+                                              <input name="money" class="form-control" placeholder="請輸入您的發票金額" />
+                                          </div>
+                                        </div>
+                                  </div>
+                                  <div class="mt-auto p-2 bd-highlight">
+                                      <button id="enter" class="btn btn-block btn-lg btn-alert">確認送出</button>
+                                  </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+    </section>
+
+    <!--登錄demo-->
+    <div class="modal"  id="mobel_demo" data-backdrop="static">
+      <div class="modal-dialog cottonfeild login " >
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <img src="assets/images/close.png" />
+            </button>
+          </div>
+          <div class="modal-body">
+              <h3 class="model_title">歡迎來到棉花田</h3>
+              <form id="loginform" method="post">
+                   <div class="form-group">
+                        <i class="b-icon phone"><img src="assets/images/phone.png" /></i>
+                        <input type="text" name="phone" class="form-control form-control-lg" placeholder="請輸入手機號碼" />
+                  </div>
+                   <div class="form-group">
+                        <i class="b-icon password"><img src="assets/images/password.png" /></i>
+                        <input type="text" name="cardno" class="form-control form-control-lg" placeholder="會員卡號或店號" />
+                  </div>
+                   <div class="form-group">
+                     <a href="javascript:void(0);" id="login" class="btn btn-block btn-lg btn-alert">登入</a>
+                  </div>
+              </form>
+              <div class="modal-header"></div>
+        </div>
+      </div>
+    </div>
+    </div>
+    
+     <!--注意事項demo-->
+    <div class="modal"  id="attention" data-backdrop="static">
+      <div class="modal-dialog cottonfeild modal-lg" >
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <img src="assets/images/close.png" />
+            </button>
+          </div>
+          <div class="modal-body">
+              <h3 class="model_title">注意事項</h3>
+              <p>1. 欲參加抽獎活動不同張發票恕不累積發票金額。</p>
+              <p>2. 本抵用券、兌換券序號使用期限至 2019/2/19，逾期恕無法兌換，每券限使用乙次。</p>
+              <p>3. 加價購商品序號使用期限至 2019/2/19，逾期恕無法兌換，每券限使用乙次本券須於下壹筆消費使用，恕不兌換現金或找零，也不列入會員消費累積。</p>
+              <p>4. 本序號券不限門市使用，僅限於棉花田實體門市使用。</p>
+              <p>5. 本券壹經使用不得退換或要求補發，抵用券/兌換券/加價購商品序號，數量有限，送/售完為止。</p>
+              <p>6. 基於個人資料保護法保護個資原則，棉花田生機園地絕不外洩參與活動者之個人資料。惟活動者於參加本活動前了解並同意主辦單位於本活動之範圍內，得蒐集、處理及利用本人之個人資料(包括但不限於姓名、e-mail、手機、會員卡號等)。</p>
+              <p>7. 活動辦法若有未盡事宜，棉花田保有隨時解釋、變更活動辦法與獎品內容，以及暫停、延長、提前終止本活動之權利。並公告於本公司活動網站，將不另行通知。</p>
+              <p>&nbsp;</p>
+              <p>與我們聯繫：</p>
+              <p>客服信箱：sun@oneness.tw。</p>
+              <p>客服專線：0800-559-588。</p>
+              <p>服務時間週一 ~ 週五 08:30 ~ 17:30</p>
+              <div class="modal-header"></div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+      
+</div>
+
+
+
+
+    <footer>
+        <div class="container">
+            <p>版權所有 棉花田生機園地股份有限公司</p>
+            <p>© 2019 Cotton Field Organic Co.,Ltd. All Rights Reserved</p>
+            <p>客服專線：0800-559-588</p>
+        </div>
+    </footer>
+
+
+
+
+    <script type="text/javascript" src="assets/js/vendor/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="assets/bootstrap/js/popper.min.js"></script>
+    <script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/libs/datepicker/js/datepicker.min.js"></script>
+    <script type="text/javascript" src="assets/libs/datepicker/js/datepicker.zh.min.js"></script>
+    <script type="text/javascript" src="assets/js/wow.min.js"></script>
+
+    <script type="text/javascript" src="assets/js/all.js?1.0"></script>
+     <script>
+         $(document).ready(function(){
+             $('.datepicker-here').datepicker({ autoClose:true, });
+         })
+         $(function () {
+             // 登錄
+             $("#login").click(function(event) {
+                 cardno = $("input[name=cardno]").val();
+                 if(cardno.length<5){
+                     alert("會員卡號（5-7碼）");
+                     $("input[name=cardno]").focus();
+                     return false;
+                 }
+                 if(cardno.length>7){
+                     alert("會員卡號（5-7碼）");
+                     $("input[name=cardno]").focus();
+                     return false;
+                 }
+
+                 phone = $("input[name=phone]").val();
+                 if(phone.length!=10){
+                     alert("手機號碼格式錯誤");
+                     $("input[name=phone]").focus();
+                     return false;
+                 }
+
+                 $.post('{:url('index/login')}', $("#loginform").serialize(), function(data, textStatus, xhr) {
+                     if(data.code==1){
+                         window.location.href = window.location.href;
+                     }else{
+                         alert(data.msg);
+                     }
+                 },'json');
+
+                 // $("#loginform").submit();
+                 return false;
+             });
+             // 輸入發票
+             $("#enter").click(function(event) {
+                 no1_1 = $("select[name=no1_1]").val();
+                 console.log(no1_1);
+                 var filter = /^[A-Z]{1}$/;
+                    if (!filter.test(no1_1)) {
+                        if (no1_1 == "") {
+                            alert("發票資訊不全，請輸入發票號碼");
+                        }else {
+                            alert("發票資訊錯誤，請輸入正確發票號碼");
+                        }
+                        $("input[name=no1_1]").focus();
+                        return false;
+                    }
+                 no1_2 = $("select[name=no1_2]").val();
+                 var filter = /^[A-Z]{1}$/;
+                 if (!filter.test(no1_2)) {
+                     if (no1_2 == "") {
+                         alert("發票資訊不全，請輸入發票號碼");
+                     }
+                     $("input[name=no1_2]").focus();
+                     return false;
+                 }
+                 no2 = $("input[name=no2]").val();
+                 var filter = /^\d{8}$/;
+                 if (!filter.test(no2)) {
+                     if (no2 == "") {
+                         alert("發票資訊不全,請輸入發票號碼");
+                     } else {
+                         alert("請輸入8位數字");
+                     }
+                     $("input[name=no2]").focus();
+                     return false;
+                 }
+                 date = $("input[name=date]").val();
+                 if(date==''){
+                     alert("發票資訊不全");
+                     $("input[name=date]").focus();
+                     return false;
+                 }
+                 code = $("input[name=code]").val();
+                 var filter = /^\d{4}$/;
+                 if (!filter.test(code) && code != "") {
+                     alert("請輸入您的發票隨機碼（4碼）");
+                     $("input[name=code]").focus();
+                     return false;
+                 }
+                 money = $("input[name=money]").val();
+                 var filter = /^[1-9]\d*$/;
+                 if (!filter.test(money)) {
+                     if (money == "") {
+                         alert("發票資訊不全");
+                     } else {
+                         alert("請輸入數字");
+                     }
+                     $("input[name=money]").focus();
+                     return false;
+                 }
+
+                // console.log($("#form_enter").serialize());return false;
+                 $.ajax({
+                     // async: true,
+                     type: 'POST',
+                     dataType: 'json',
+                     data:  $("#form_enter").serialize(),
+                     url: '{:url('index/enter')}',
+                     success: function (res) {
+                         console.log(res);
+                         // app.column = res.data[0];
+                     },
+                     error: function (res) {
+                         console.log(res);
+                     }
+                 });
+                 // $.post('{:url('index/enter')}', $("#form_enter").serialize(), function(data, textStatus, xhr) {
+                 //     console.log(data);return;
+                 //     if(data.code==1){
+                 //         // document.getElementById("choujiangdiv").style.display="";
+                 //         $(".award").html(data.data.award);
+                 //         $(".limit").html(data.data.limit);
+                 //
+                 //         sendIn();
+                 //     }else{
+                 //         alert(data.msg);
+                 //         // window.location.href = window.location.href;
+                 //     }
+                 // },'json');
+             });
+
+         })
+     </script>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">{$weizhi.title}</h3>
+
+    <div class="box-right">
+      <a href="{:url($_c.'/bannerEdit')}"><i class="fa fa-edit"></i> 图片添加</a>
+    </div>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body" >
+    <div id="Contentspjax" >
+      <table id="example1" class="table table-bordered table-striped table-hover">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>标题</th>
+          <th>链接</th>
+          <th>图片</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+          {foreach $list as $ko => $vo}
+            <tr id="{$ko}">
+              <td>{$vo.id}</td>
+              <td>{$vo.title}</td>
+              <td>{$vo.url}</td>
+              <td>
+                {$vo.img}
+                {if !empty($vo['img'])}<br><a href="{$vo.img}" target="_blank"><img src="{$vo.img}" width="300"></a>{/if}
+              </td>
+              <td>
+                <a href="{:url($_c.'/bannerEdit',['id'=>$vo['id']])}"><i class="fa fa-edit"></i> 修改</a>&nbsp;&nbsp;  
+                <a href="javascript:void(0);" onclick="isdel('您确定要删除这项吗？','{:url($_c.'/bannerDel',['id'=>$vo['id']])}');"><i class="fa fa-trash-o"></i> 删除</a>
+              </td>
+            </tr>
+          {/foreach}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- /.box-body -->
+</div>

@@ -1,0 +1,73 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">{$weizhi.title}</h3>
+
+    <div class="box-right">
+    </div>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body" >
+    <form method="post" action="invoiceQuery">
+      <div class="col-sm-6" style="width: 100%">
+          <div class="col-md-5 col-sm-4" style="line-height: 30px;margin-top: 15px;">
+              <!-- <div class="form-group">
+                <span style="width: 30%;display: block;float: left;">會員篩選：</span>
+                <input type="text" name="cardno" class="input-sm pjaxchangge" style="width: 50%;" value="{$param.cardno|default=''}" placeholder="會員名稱">
+              </div> -->
+              <div class="form-group">
+                <span style="width: 30%;display: block;float: left;">發票查詢：</span>
+                <input type="text" name="no1" class="input-sm pjaxchangge" style="width: 20%;" value="{$param.no1|default=''}" placeholder="號碼AA">-
+                <input type="text" name="no2" class="input-sm pjaxchangge" style="width: 30%;" value="{$param.no2|default=''}" placeholder="號碼12345678">
+          <button type="submit" value="查詢">查詢</button>
+              </div>
+          </div>
+          <!-- <div class="col-md-4 col-sm-4" style="line-height: 30px;margin-top: 15px;">
+              <div class="form-group">
+                <span style="width: 48%;display: block;float: left;">狀態篩選：</span>
+                
+                <select style="width: 50%;" name="status" class="form-control input-sm pjaxchangge select2" >
+                  <option value="" {if ""==($param.status??'')}selected{/if}>所有</option>
+                  
+                  {foreach $model->status_arr as $k => $v}
+                  <option value="{$k}" {if strval($k)==($param.status??'')}selected{/if} >{$v}</option>
+                  {/foreach}
+                </select>
+            </div>
+          </div> -->
+      </div>
+      
+    </form>
+
+    <div id="Contentspjax" >
+      {include file="info/invoiceajax" /}
+    </div>
+  </div>
+  <!-- /.box-body -->
+</div>
+<!-- <script>
+    $(function(){
+        $('.select2').select2({
+            language:'zh-CN'
+        });
+
+        $(".pjaxchangge").change(function(){
+            var selectstr = '?';
+            $(".pjaxchangge").each(function(){
+                var name = $(this).attr('name');
+                var value = $(this).val();
+
+                selectstr = selectstr+name+"="+value+"&";
+            })
+
+            console.log(selectstr)
+            $.pjax({
+                url: "{:url($_c.'/'.$_a)}"+selectstr,
+                container: '#Contentspjax'
+            });
+        });
+
+        $(document).pjax('.pagination li a', '#Contentspjax', { timeout:3000,replace:true,scrollTo:false});
+        $(document).on('pjax:start', function() { NProgress.start(); });
+        $(document).on('pjax:end',   function() { NProgress.done();  });
+    })
+</script> -->

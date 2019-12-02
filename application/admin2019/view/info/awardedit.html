@@ -1,0 +1,63 @@
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="nav-tabs-custom" style="margin-top: 20px;">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#fa-icons-server" data-toggle="tab">基本信息</a></li>
+        </ul>
+        <form action="{:url($_c.'/awardEdit');}" enctype="multipart/form-data" method="post" name="qxform" id="qxform">
+        <div class="tab-content">
+          <!-- Font Awesome Icons -->
+          <div class="tab-pane active" style="padding-left: 20px;" id="fa-icons-server">
+              <input type="hidden" name="__token__" value="{$Request.token}" />
+            <section id="new">
+              <div class="row fontawesome-icon-list">
+                <div class="col-md-3 col-sm-4" >
+                    <div class="form-group">
+                      <span style="display: inline-block;width: 20%">獎項分類：</span>
+                      <select class="form-control select2" style="width: 50%;" name="type_id" id="type_id">
+                        {foreach $list_cate as $k => $v}
+                        <option value="{$k}" {if strval($k)==($info.type_id??'')}selected{/if} >{$v}</option>
+                        {/foreach}
+                      </select>
+                      <span class="icon icon-cid margin-small" ></span><span style="color: red">*</span>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-4" >
+                  <span style="display: inline-block;width: 20%">序號：</span>
+                  <input type="text" style="color: #444444;width: 60%" id="no" name="no" value="{$info.no}"> <span style="color: red">*</span><span class="icon icon-no margin-small" ></span>
+                </div>
+                <div class="col-md-3 col-sm-4" >
+                  <span style="display: inline-block;width: 20%">獎項名稱：</span>
+                  <input type="text" style="color: #444444;width: 60%" id="title" name="title" value="{$info.title}"> <span class="icon icon-title margin-small" ></span>
+                </div>
+
+              </div>
+            </section>
+          </div>
+
+          <button type="button" class="btn btn-primary" style="margin-top: 10px;margin-bottom:20px;margin-left: 100px;" onclick="qxsubmit();">提交</button><span class="icon icon-ms margin-small" ></span>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <style>
+      .col-sm-4{width: 60%;line-height: 30px;margin-top: 15px;}
+      .col-sm-4 input,.col-sm-4 textarea{text-indent: 10px}
+  </style>
+
+  <script>
+      function qxsubmit() {
+          document.qxform.submit();
+      }
+
+      $(function() {
+          // 下拉框
+          $('.select2').select2({
+              language:'zh-CN'
+          });
+      });
+  </script>
+</section>

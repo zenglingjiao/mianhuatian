@@ -1,0 +1,44 @@
+      <table id="example1" class="table table-bordered table-striped table-hover">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>用户名</th>
+          <th>留言</th>
+          <th>网站备注</th>
+
+          <th>添加时间</th>
+          <th>更新时间</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+          {foreach $list as $ko => $vo}
+            <tr id="{$ko}">
+              <td>{$vo.id}</td>
+              <td>{$vo.username}</td>
+              <td><pre>{$vo.content|raw}</pre></td>
+              <td><pre>{$vo.reply|raw}</pre></td>
+
+              <td>{$vo.add_time}</td>
+              <td>{$vo.reply_time}</td>
+              <td>
+                <a href="{:url($_c.'/messageEdit',['id'=>$vo['id']])}"><i class="fa fa-edit"></i> 修改</a>&nbsp;&nbsp;  
+                <a href="javascript:void(0);" onclick="isdel('您确定要删除这项吗？','{:url($_c.'/messageDel',['id'=>$vo['id']])}');"><i class="fa fa-trash-o"></i> 删除</a>
+              </td>
+            </tr>
+          {/foreach}
+        </tbody>
+      </table>
+
+      <div class="row">
+        <div class="col-sm-5">
+          <div class="dataTables_info"  role="status" aria-live="polite">
+            <!--Showing 1 to 10 of 57 entries-->
+          </div>
+        </div>
+        <div class="col-sm-7">
+          <div class="dataTables_paginate paging_simple_numbers" >
+                {$list|raw}
+          </div>
+        </div>
+      </div>

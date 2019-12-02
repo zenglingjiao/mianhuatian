@@ -1,0 +1,77 @@
+<script charset="utf-8" src="__STATIC__/kin/kindeditor-all-min.js"></script>
+<script charset="utf-8" src="__STATIC__/kin/lang/zh-CN.js"></script>
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="nav-tabs-custom" style="margin-top: 20px;">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#fa-icons-server" data-toggle="tab">基本信息</a></li>
+        </ul>
+
+        <form action="" enctype="multipart/form-data" method="post" name="qxform" id="qxform">
+        <div class="tab-content">
+          <!-- Font Awesome Icons -->
+          <div class="tab-pane active" style="padding-left: 20px;" id="fa-icons-server">
+            <section id="new">
+              <div class="row fontawesome-icon-list">
+                <div class="col-md-7 col-sm-4" style="width: 60%;line-height: 30px;margin-top: 15px;">
+                  <span style="display: inline-block;width: 10%">Logo：</span>
+                  <span id="pic_logo" style="cursor:pointer;color:#1E88C7;background: #D0EEFF;border-radius: 5px;padding:5px 22px;">选择图片</span>
+                  <input name="pic_logo" accept="image/*" type="file" style="display: none"/>
+                </div>
+                <div class="col-md-7 col-sm-4" style="width: 60%;line-height: 30px;margin-top: 15px;">
+                  <span style="display: inline-block;width: 10%"></span>
+                  <span id="preview">
+                    {if !empty($list['pic_logo'])}<a href="{$list.pic_logo}" target="_blank"><img src="{$list.pic_logo}" width="300"></a>{/if}
+                  </span>
+                </div>
+
+                <div class="col-md-7 col-sm-4" style="width: 60%;line-height: 30px;margin-top: 15px;">
+                  <span style="display: inline-block;width: 10%">Banner：</span>
+                  <span id="pic_banner" style="cursor:pointer;color:#1E88C7;background: #D0EEFF;border-radius: 5px;padding:5px 22px;">选择图片</span>
+                  <input name="pic_banner" accept="image/*" type="file" style="display: none"/>
+                </div>
+                <div class="col-md-7 col-sm-4" style="width: 60%;line-height: 30px;margin-top: 15px;">
+                  <span style="display: inline-block;width: 10%"></span>
+                  <span id="preview2">
+                    {if !empty($list['pic_banner'])}<a href="{$list.pic_banner}" target="_blank"><img src="{$list.pic_banner}" width="300"></a>{/if}
+                  </span>
+                </div>
+            </section>
+          </div>
+          
+          <button type="button" class="btn btn-primary" style="margin-top: 10px;margin-bottom:20px;margin-left: 100px;" onclick="qxsubmit();">提交</button><span class="icon icon-ms margin-small" ></span>
+        </div>
+        </form>
+        <!-- /.tab-content -->
+      </div>
+    </div>
+    <!-- /.col -->
+  </div>
+    
+  <script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+  <script type="text/javascript" src="__STATIC__/public/common.js"></script>
+  <script>
+      function qxsubmit() {
+          document.qxform.submit();
+      }
+      $(function() {
+          $("#pic_logo").click(function () {
+              $("input[name=pic_logo]").click();
+              $("input[name=pic_logo]").on("change",function(){
+                  previewImage(this,'preview',200,200);
+              });
+          });
+          $("#pic_banner").click(function () {
+              $("input[name=pic_banner]").click();
+              $("input[name=pic_banner]").on("change",function(){
+                  previewImage(this,'preview2',200,200);
+              });
+          });
+      });
+  </script>
+</section>
+
+
+
+

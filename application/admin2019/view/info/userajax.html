@@ -1,0 +1,62 @@
+        <table id="example1" class="table table-bordered table-striped table-hover">
+            <thead>
+            <tr>
+              <th>NO</th>
+              <th>會員卡號</th>
+              <th>手機</th>
+              <th>優惠劵</th>
+              <th>發票</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {foreach $list as $vo}
+            <tr>
+              <td>{$vo.id}</td>
+              <td>{$vo.cardno}</td>
+              <td>{$vo.phone}</td>
+
+              <td>
+                <a href="{:url($_c.'/userCouponList',['uid'=>$vo['id']])}">列表</a>&nbsp;&nbsp;  
+              </td>
+              <td>
+                <a href="{:url($_c.'/userInvoiceList',['uid'=>$vo['id']])}">列表</a>&nbsp;&nbsp;  
+              </td>
+              <td>
+                <a href="javascript:void(0);" onclick="isdel2('您確定要刪除這項嗎？','{:url($_c.'/userlistajaxDel',['id'=>$vo['id']])}',this);">刪除</a>&nbsp;&nbsp;  
+              </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+
+        <div class="row">
+          <div class="col-sm-5">
+            <div class="dataTables_info"  role="status" aria-live="polite">
+              <!--Showing 1 to 10 of 57 entries-->
+            </div>
+          </div>
+          <div class="col-sm-7">
+            <div class="dataTables_paginate paging_simple_numbers" >
+                  {$list|raw}
+            </div>
+          </div>
+        </div>
+
+        <script type="text/javascript">
+    function isdel2(str, url, dom) {
+        layer.confirm(str, {
+            btn: ['确定', '取消'] //按钮
+        }, function () {
+            // window.location.href=url;
+            $.get(url, function (d) {
+                // alert(d.msg);
+                layer.closeAll();
+                $(dom).parents('tr').remove();
+            }, 'json');
+        }, function () {
+
+        });
+    }
+        </script>

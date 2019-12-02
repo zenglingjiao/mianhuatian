@@ -1,0 +1,105 @@
+<script charset="utf-8" src="__STATIC__/kin/kindeditor-all-min.js"></script>
+<script charset="utf-8" src="__STATIC__/kin/lang/zh-CN.js"></script>
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="nav-tabs-custom" style="margin-top: 20px;">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#fa-icons-server" data-toggle="tab">基本信息</a></li>
+          <li class=""><a href="#fa-icons-test" data-toggle="tab">邮件测试</a></li>
+        </ul>
+
+        <form action="" enctype="multipart/form-data" method="post" name="qxform" id="qxform">
+        <div class="tab-content">
+          <!-- Font Awesome Icons -->
+          <div class="tab-pane active" style="padding-left: 20px;" id="fa-icons-server">
+            <section id="new">
+              <div class="row fontawesome-icon-list">
+                <div class="col-md-7 col-sm-4">
+                  <label>是否开启：</label>
+                  <input type="radio" {if ($list.email_isopen??'0')=='1'}checked=""{/if} value="1" name="email_isopen" style="width: 20px"> 开启
+                  <input type="radio" {if ($list.email_isopen??'0')=='0'}checked=""{/if} value="0" name="email_isopen" style="width: 20px;margin-left: 10px"> 关闭
+                </div>
+                <div class="col-md-7 col-sm-4" >
+                  <label>SMTP服务器：</label>
+                  <input type="text" name="email_ser" value="{$list.email_ser??''}"> 
+                  <span class="icon icon-title margin-small" ></span>
+                </div>
+                <!-- <div class="col-md-7 col-sm-4" >
+                  <label>SMTP端口：</label>
+                  <input type="text" name="email_port" value="{$list.email_port??''}"> 
+                  <span class="icon icon-title margin-small" ></span>
+                </div> -->
+                <div class="col-md-7 col-sm-4" >
+                  <label>SMTP用户名：</label>
+                  <input type="text" name="email_user" value="{$list.email_user??''}"> 
+                  <span class="icon icon-title margin-small" ></span>
+                </div>
+                <div class="col-md-7 col-sm-4" >
+                  <label>SMTP密码：</label>
+                  <input type="text" name="email_pwd" value="{$list.email_pwd??''}"> 
+                  <span class="icon icon-title margin-small" ></span>
+                </div>
+                <div class="col-md-7 col-sm-4" >
+                  <label>SMTP发件人：</label>
+                  <input type="text" name="email_nick" value="{$list.email_nick??''}"> 
+                  <span class="icon icon-title margin-small" ></span>
+                </div>
+              </div>
+            </section>
+
+            <button type="button" class="btn btn-primary" style="margin-top: 10px;margin-bottom:20px;margin-left: 100px;" onclick="qxsubmit();">提交</button><span class="icon icon-ms margin-small" ></span>
+          </div>
+
+          <div class="tab-pane" style="padding-left: 20px;" id="fa-icons-test">
+            <section id="new">
+              <div class="row fontawesome-icon-list">
+                <div class="col-md-7 col-sm-4" >
+                  <label>收件人邮箱：</label>
+                  <input type="text" name="test_email" value="{$list.test_email??''}"> 
+                  <span class="icon icon-title margin-small" ></span>
+                </div>
+                <div class="col-md-7 col-sm-4" >
+                  <label>邮件标题：</label>
+                  <input type="text" name="test_pro" value="{$list.test_pro??''}"> 
+                  <span class="icon icon-title margin-small" ></span>
+                </div>
+                <div class="col-md-7 col-sm-4" >
+                  <label>邮件内容：</label>
+                  <textarea rows="2" name="test_content">{$list.test_content??''}</textarea>
+                  <span class="icon icon-title margin-small" ></span>
+                </div>
+              </div>
+            </section>
+            
+            <button type="button" class="btn btn-primary" style="margin-top: 10px;margin-bottom:20px;margin-left: 100px;" onclick="qxsubmit();">提交</button><span class="icon icon-ms margin-small" ></span>
+
+            <button type="button" class="btn btn-primary" style="margin-top: 10px;margin-bottom:20px;margin-left: 100px;" onclick="test();">测试</button><span class="icon icon-ms margin-small" ></span>
+          </div>
+          
+        </div>
+        </form>
+        <!-- /.tab-content -->
+      </div>
+    </div>
+    <!-- /.col -->
+  </div>
+  
+  <script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+  <script type="text/javascript" src="__STATIC__/public/common.js"></script>
+  <script>
+      function qxsubmit() {
+          document.qxform.submit();
+      }
+
+      function test() {
+          $.post( "{:url('system/email_test')}", $( "#qxform" ).serialize(), function(d) {
+            alert( d.msg );
+          }, 'json');
+      }
+  </script>
+</section>
+
+
+
+

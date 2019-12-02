@@ -1,0 +1,130 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">{$weizhi.title}</h3>
+
+    <div class="box-right">
+      <a href="{:url($_c.'/messageEdit')}"><i class="fa fa-edit"></i> 留言添加</a>
+    </div>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body" >
+    <div class="col-sm-6" style="width: 100%">
+        <div class="col-md-3 col-sm-6" style="line-height: 30px;margin-top: 15px;">
+            <span style="width: 30%;display: block;float: left;">每页条数：</span>
+
+            <select name="limit" class="form-control input-sm pjaxchangge" style="width: 50%;display: block;">
+              <option value="5" {if $model->limit==5}selected{/if} >5</option>
+              <option value="10" {if $model->limit==10}selected{/if}>10</option>
+              <option value="20" {if $model->limit==20}selected{/if}>20</option>
+              <option value="50" {if $model->limit==50}selected{/if}>50</option>
+            </select>
+        </div>
+
+        <div class="col-md-3 col-sm-6" style="line-height: 40px;margin-top: 15px;">
+            <div class="form-group" >
+                <div class="input-group">选择时间：
+                    <button type="button" class="btn btn-default pull-right" id="daterange-btn">
+                        <span><i class="fa fa-calendar"></i> 所有时间</span>
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                </div>
+            </div>
+            <input type="hidden" class="pjaxchangge" name="starttime" id="starttime" value="">
+            <input type="hidden" class="pjaxchangge" name="endtime" id="endtime" value="">
+        </div>
+    </div>
+    <div id="Contentspjax" >
+      {include file="Message/messageajax" /}
+    </div>
+  </div>
+  <!-- /.box-body -->
+</div>
+<script>
+    $(function(){
+        // 日期搜索
+        moment.locale('zh-cn');
+        $('#daterange-btn').daterangepicker(
+            {
+               // timePicker: true,
+               // timePicker24Hour: true,
+                applyClass : 'btn-sm btn-success',
+                cancelClass : 'btn-sm btn-default',
+                locale: {
+                    applyLabel: '确认',
+                    cancelLabel: '取消',
+                    fromLabel : '起始时间',
+                    toLabel : '结束时间',
+                    customRangeLabel : '自定义',
+                    firstDay : 1
+                },
+                ranges   : {
+                    '所有时间'       : [moment().subtract(9, 'days'), moment().subtract(9, 'days')],
+                    '查询今天'       : [moment(), moment()],
+                    '查询昨天'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    '查询过去七天' : [moment().subtract(6, 'days'), moment()],
+                    '查询过去30天': [moment().subtract(29, 'days'), moment()],
+                    '查询本月'  : [moment().startOf('month'), moment().endOf('month')],
+                    '查询上个月'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+
+                {if !empty($param.starttime) && !empty($param.endtime)}
+                  startDate: moment("{$param.starttime}"),
+                  endDate  : moment("{$param.endtime}")
+                {else/}
+                  startDate: moment().subtract(29, 'days'),
+                  endDate  : moment()
+                {/if}
+            },
+
+            function (start, end, label) {
+                if(label == '所有时间') {
+                   $('#daterange-btn span').html('<i class="fa fa-calendar"></i> 所有时间');
+                   $('#starttime').val('');
+                   $('#endtime').val('');
+                } else {
+                   $('#daterange-btn span').html('<i class="fa fa-calendar"></i> '+start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'))
+                   $('#starttime').val(start.format('YYYY-MM-DD'));
+                   $('#endtime').val(end.format('YYYY-MM-DD'));
+                }
+
+                //pjax
+                $("#starttime").change();
+            }
+        )
+
+        {if !empty($param.starttime) && !empty($param.endtime)}
+          $('#daterange-btn span').html('<i class="fa fa-calendar"></i> {$param.starttime} - {$param.endtime}')
+          $('#starttime').val('{$param.starttime}');
+          $('#endtime').val('{$param.endtime}');
+        {else/}
+          $('#daterange-btn span').html('<i class="fa fa-calendar"></i> 所有时间');
+          $('#starttime').val('');
+          $('#endtime').val('');
+        {/if}
+        
+        // 权限搜索
+        $('.select2').select2({
+            language:'zh-CN'
+        });
+
+        $(".pjaxchangge").change(function(){
+            var selectstr = '?';
+            $(".pjaxchangge").each(function(){
+                var name = $(this).attr('name');
+                var value = $(this).val();
+
+                selectstr = selectstr+name+"="+value+"&";
+            })
+
+            console.log(selectstr)
+            $.pjax({
+                url: "{:url($_c.'/'.$_a)}"+selectstr,
+                container: '#Contentspjax'
+            });
+        });
+
+        $(document).pjax('.pagination li a', '#Contentspjax', { timeout:3000,replace:true,scrollTo:false});
+        $(document).on('pjax:start', function() { NProgress.start(); });
+        $(document).on('pjax:end',   function() { NProgress.done();  });
+    });
+</script>

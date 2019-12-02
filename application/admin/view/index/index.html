@@ -1,0 +1,39 @@
+<div class="nav-tabs-custom">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#fa-icons" data-toggle="tab">歡迎頁面</a></li>
+  </ul>
+  <div class="tab-content">
+    <!-- Font Awesome Icons -->
+    <div class="tab-pane active" id="fa-icons">
+      <section id="new">
+        <h4 class="page-header">登入信息</h4>
+        <div class="row fontawesome-icon-list">
+          <div class="col-md-3 col-sm-4" style="width: 100%;line-height: 40px;">{$userinfo.nickname}，
+            <?php $h=date('G');if ($h<12) echo '上午好！';  else if ($h<13) echo '中午好！';  else if ($h<18) echo '下午好！';  else echo '晚上好！'; ?>
+          </div>
+          <div class="col-md-3 col-sm-4" style="width: 100%;line-height: 40px;">所屬權限組：{$authname}</div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<div class="nav-tabs-custom">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#fa-icons-server" data-toggle="tab">服務器</a></li>
+  </ul>
+  <div class="tab-content">
+    <!-- Font Awesome Icons -->
+    <div class="tab-pane active" id="fa-icons-server">
+      <section id="new-server">
+        <h4 class="page-header">服務器信息</h4>
+        <div class="row fontawesome-icon-list">
+          {volist name="serverinfo" id="server"}
+            <div class="col-md-3 col-sm-4" style="width: 50%;line-height: 40px;">{$server.name}：{$server.value}</div>
+          {/volist}
+        </div>
+      </section>
+    </div>
+    <!-- /#fa-icons -->
+  </div>
+  <!-- /.tab-content -->
+</div>

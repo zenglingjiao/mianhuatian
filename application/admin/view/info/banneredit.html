@@ -1,0 +1,76 @@
+<link rel="stylesheet" href="__STATIC__/admin/adminlte/bower_components/select2/css/select2.min.css">
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="nav-tabs-custom" style="margin-top: 20px;">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#fa-icons-server" data-toggle="tab">{if isset($info) && !empty($info)}修改{else/}添加{/if}数据</a></li>
+        </ul>
+        <div class="tab-content">
+          <!-- Font Awesome Icons -->
+          <div class="tab-pane active" id="fa-icons-server">
+            <form action="{:url($_c.'/'.$_a);}" method="post" name="qxform" id="qxform" enctype="multipart/form-data">
+              <input type="hidden" name="__token__" value="{$Request.token}" />
+              <input type="hidden" name="id" id="id" value="{$info.id}" />
+
+              <section id="new">
+                <!--<h4 class="page-header">分类信息</h4>-->
+                <div class="row fontawesome-icon-list">
+                  <div class="col-md-3 col-sm-4">
+                    <span style="display: inline-block;width: 10%">标题：</span>
+                    <input type="text" style="color: #444444;width: 20%" name="title" value="{$info.title}">
+                    <span style="color: red">*</span>
+                    <span class="icon icon-username margin-small" ></span>
+                  </div>
+                  <div class="col-md-3 col-sm-4">
+                    <span style="display: inline-block;width: 10%">链接：</span>
+                    <input type="text" style="color: #444444;width: 80%" name="url" value="{$info.url}">
+                  </div>
+
+                  <div class="col-md-3 col-sm-4" style="width: 60%;line-height: 30px;margin-top: 15px;">
+                    <span style="display: inline-block;width: 10%">图片：</span>
+                    <span id="selectpic" style="cursor:pointer;color:#1E88C7;background: #D0EEFF;border-radius: 5px;padding:5px 22px;">选择图片</span>
+                    <input id="upload" name="img" accept="image/*" type="file" style="display: none"/>
+                  </div>
+                  <div class="col-md-3 col-sm-4" style="width: 60%;line-height: 30px;margin-top: 15px;">
+                    <span style="display: inline-block;width: 10%"></span>
+                    <span id="preview">
+                      {if !empty($info['img'])}<a href="{$info.img}" target="_blank"><img src="{$info.img}" width="300"></a>{/if}
+                    </span>
+                  </div>
+                </div>
+              </section>
+
+              <button type="button" class="btn btn-primary" style="margin-top: 30px;margin-left: 100px;" onclick="qxsubmit();">提交</button><span class="icon icon-userqx margin-small" ></span>
+          </form>
+          </div>
+          <!-- /#fa-icons -->
+        </div>
+        <!-- /.tab-content -->
+      </div>
+    </div>
+    <!-- /.col -->
+  </div>
+  <style>
+    .col-sm-4{width: 60%;line-height: 30px;margin-top: 15px;}
+    .col-sm-4 input,.col-sm-4 textarea{text-indent: 10px}
+  </style>
+
+  <script>
+    function qxsubmit() {
+        if($('#title').val() == '') {
+            tips('请填写标题！','.icon-title','title');
+            return false;
+        }
+        document.qxform.submit();
+    }
+    $(function() {
+        $("#selectpic").click(function () {
+            $("#upload").click();
+            $("#upload").on("change",function(){
+                previewImage(this,'preview',200,200);
+            });
+        });
+    });
+  </script>
+</section>

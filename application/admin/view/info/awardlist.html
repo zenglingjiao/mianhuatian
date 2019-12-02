@@ -1,0 +1,90 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">{$weizhi.title}</h3>
+
+    <form id="awardImport" method="post" action="{:url($_c.'/awardImport')}" enctype="multipart/form-data" style="display: none;">
+      <input type="file" name="excel">
+    </form>
+
+    <div class="box-right" style="padding-right: 200px;">
+      <a class="awardImport" href="javascript:;"><i class="fa fa-file-excel-o"></i> 匯入</a>
+      <a href="{:url($_c.'/awardExport')}?{:http_build_query($_GET)}"><i class="fa fa-download"></i> 匯出</a>
+      <a href="{:url($_c.'/awardEdit')}"><i class="fa fa-edit"></i> 添加</a>
+    </div>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body" >
+    <div class="col-sm-6" style="width: 100%">
+        <div class="col-md-4 col-sm-4" style="line-height: 30px;margin-top: 15px;">
+            <div class="form-group">
+              <span style="width: 48%;display: block;float: left;">獎品篩選：</span>
+              <input type="text" name="key" class="input-sm pjaxchangge" style="width: 50%;" value="{$param.key|default=''}" placeholder="搜尋序號、獎項名稱">
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-4" style="line-height: 30px;margin-top: 15px;">
+            <div class="form-group">
+              <span style="width: 48%;display: block;float: left;">獎項篩選：</span>
+              
+              <select style="width: 50%;" name="type_id" class="form-control input-sm pjaxchangge select2" >
+                <option value="" {if ""==($param.type_id??'')}selected{/if}>所有</option>
+                
+                {foreach $list_cate as $k => $v}
+                <option value="{$k}" {if strval($k)==($param.type_id??'')}selected{/if} >{$v}</option>
+                {/foreach}
+              </select>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4" style="line-height: 30px;margin-top: 15px;">
+            <div class="form-group">
+              <span style="width: 48%;display: block;float: left;">狀態篩選：</span>
+              
+              <select style="width: 50%;" name="status" class="form-control input-sm pjaxchangge select2" >
+                <option value="" {if ""==($param.status??'')}selected{/if}>所有</option>
+                
+                {foreach $model->status_arr as $k => $v}
+                <option value="{$k}" {if strval($k)==($param.status??'')}selected{/if} >{$v}</option>
+                {/foreach}
+              </select>
+          </div>
+        </div>
+    </div>
+    <div id="Contentspjax" >
+      {include file="info/awardajax" /}
+    </div>
+  </div>
+  <!-- /.box-body -->
+</div>
+<script>
+    $(function(){
+        $('.select2').select2({
+            language:'zh-CN'
+        });
+
+        $(".pjaxchangge").change(function(){
+            var selectstr = '?';
+            $(".pjaxchangge").each(function(){
+                var name = $(this).attr('name');
+                var value = $(this).val();
+
+                selectstr = selectstr+name+"="+value+"&";
+            })
+
+            console.log(selectstr)
+            $.pjax({
+                url: "{:url($_c.'/'.$_a)}"+selectstr,
+                container: '#Contentspjax'
+            });
+        });
+
+        $(".awardImport").click(function(event) {
+          $("#awardImport input").click();
+        });
+        $("#awardImport input").change(function(event) {
+          $("#awardImport").submit();
+        });
+
+        $(document).pjax('.pagination li a', '#Contentspjax', { timeout:3000,replace:true,scrollTo:false});
+        $(document).on('pjax:start', function() { NProgress.start(); });
+        $(document).on('pjax:end',   function() { NProgress.done();  });
+    })
+</script>

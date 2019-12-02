@@ -1,0 +1,126 @@
+<link rel="stylesheet" href="__STATIC__/admin/adminlte/bower_components/select2/css/select2.min.css">
+<style>
+  .ddddddddddddddddddd:hover{
+    background-color: #1EA2E3;color: white;
+  }
+  .ddddddddddddddddddd{display:table-header-group;padding: 0}
+</style>
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="nav-tabs-custom" style="margin-top: 20px;">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#fa-icons-server" data-toggle="tab">{if isset($info) && !empty($info)}修改{else/}添加{/if}数据</a></li>
+        </ul>
+        <div class="tab-content">
+          <!-- Font Awesome Icons -->
+          <div class="tab-pane active" id="fa-icons-server">
+            <form action="{:url($_c.'/authEdit');}" method="post" name="qxform" id="qxform">
+              <input type="hidden" name="__token__" value="{$Request.token}" />
+              <input type="hidden" name="id" value="{$info.id}" />
+              <section id="new">
+                <!--<h4 class="page-header">权限组基础信息</h4>-->
+                <div class="row fontawesome-icon-list">
+                  <div class="col-md-3 col-sm-4" style="width: 60%;line-height: 30px;">
+                    权限组名称：<input type="text" style="text-indent: 10px;color: #444444;width: 80%" id="title" name="title" value="{$info.title}"> <span style="color: red">*</span><span class="icon icon-user margin-small" ></span>
+                  </div>
+                  <div class="col-md-3 col-sm-4" style="width: 60%;margin-top: 20px;">
+                    权限组描述：<textarea rows="2" cols="70" style="padding:5px;color: #444444;width: 80%;" name="desp">{$info.desp}</textarea>
+                  </div>
+                </div>
+              </section>
+
+              <section id="new-server" style="margin: 15px 15px 0 15px;">
+                <h4 class="page-header">具体权限</h4>
+                <div class="row fontawesome-icon-list">
+                  <div class="col-md-3 col-sm-4" style="width: 100%;line-height: 40px;padding: 0;">
+                    <input type="checkbox" id="rbac" onclick="xuanzqx(this,'all');"> 
+                    <i class="fa fa-check-circle-o"></i>
+                    <label for="rbac"> 全选</label>
+                    <i class="fa fa-circle" style="margin-left: 30px;"></i> 代表二级栏目，<i class="fa fa-circle-o"></i> 代表三级栏目
+                  </div>
+                  {foreach $admin_menus as $key=>$menu}
+                     <div class="col-md-3 col-sm-4 ddddddddddddddddddd" style="width: 100%;line-height: 40px;">
+                       <input type="checkbox" id="rbac_{$key}" name="auth[{$key}]" value="{$key}" onclick="xuanzqx(this,'rbac_{$key}');">  
+                       <i class="fa {$menu.inco}"></i> 
+                       <label for="rbac_{$key}">{$menu.title}</label>
+                     </div>
+                    {foreach $menu.menu as $keys=>$zimenu}
+                      {if isset($zimenu['menu']) && !empty($zimenu['menu'])}
+                          <div class="col-md-3 col-sm-4 ddddddddddddddddddd" style="width: 100%;line-height: 40px;">
+                            <input type="checkbox" style="margin-left: 30px;" id="rbac_{$key}_{$keys}" name="rbac_{$key}_{$keys}"  onclick="xuanzqx(this,'rbac_{$key}_{$keys}');" value="{$keys}"> 
+                            <i class="fa {$zimenu.inco}"></i> 
+                            <label for="rbac_{$key}_{$keys}" style="font-weight: 500">{$zimenu.title}</label>
+                          </div>
+                         {php}$sancount = 1;{/php}
+                         {foreach $zimenu['menu'] as $ky=>$sanmenu}
+                            <div class="col-md-3 col-sm-4 ddddddddddddddddddd" style="width: 15%;line-height: 40px;">
+                              <input type="checkbox"  class="jutidddddd"   id="rbac_{$key}_{$keys}_{$ky}" name="pre[{$key}][{$ky}]" style="margin-left:{if $sancount == 1}60{else/}60{/if}px;" value="{$ky}" {if (isset($info['pre'][$key])&&is_array($info['pre'][$key])&&in_array($ky,$info['pre'][$key]))}checked="checked"{/if} > 
+                              <i class="fa {$sanmenu.inco}"></i> 
+                              <label for="rbac_{$key}_{$keys}_{$ky}" style="font-weight: normal">{$sanmenu.title}</label>
+                            </div>
+                            {php}$sancount++;{/php}
+                         {/foreach}
+                      {else/}
+                        <div class="col-md-3 col-sm-4 ddddddddddddddddddd" style="width: 15%;line-height: 40px;">
+                          <input type="checkbox" class="jutidddddd" style="margin-left: 30px;" id="rbac_{$key}_{$keys}" name="pre[{$key}][{$keys}]" value="{$keys}" {if (isset($info['pre'][$key])&&is_array($info['pre'][$key])&&in_array($keys,$info['pre'][$key]))}checked="checked"{/if}> 
+                          <i class="fa {$zimenu.inco}"></i> 
+                          <label for="rbac_{$key}_{$keys}" style="font-weight: normal">{$zimenu.title}</label>
+                        </div>
+                      {/if}
+                    {/foreach}
+                  {/foreach}
+                </div>
+                <button type="button" class="btn btn-primary" style="margin-top: 30px;margin-left: 100px;" onclick="qxsubmit();">提交</button><span class="icon icon-userqx margin-small" ></span>
+              </section>
+            </form>
+          </div>
+          <!-- /#fa-icons -->
+        </div>
+        <!-- /.tab-content -->
+      </div>
+    </div>
+    <!-- /.col -->
+  </div>
+  <style>
+    .col-sm-4{width: 60%;line-height: 30px;margin-top: 15px;}
+    .col-sm-4 input,.col-sm-4 textarea{text-indent: 10px}
+  </style>
+
+  <script>
+    function qxsubmit() {
+      if($('#title').val() == '') {
+          tips('请填写权限组名称！','.icon-user','title');
+          return false;
+      }
+      var check = false;
+      $('.jutidddddd').each(function(){
+          if($(this).prop("checked")) {
+              check = true;
+              return false
+          }
+      })
+      if(check == false) {
+          tips('请选择具体权限！','.icon-userqx','new-server');
+          return false;
+      }
+      document.qxform.submit();
+    }
+    function xuanzqx(nav,type) {
+      if(type == 'all') {
+          if($(nav).prop("checked")) {
+              $('#new-server :checkbox').prop("checked",true);
+          } else {
+              $('#new-server :checkbox').prop("checked",false);
+          }
+      } else {
+          var ischeck = $(nav).prop("checked");
+          $('#new-server :checkbox').each(function(){
+              if($(this).attr('id').indexOf(type)>=0) {
+                  $(this).prop("checked",ischeck);
+              }
+          })
+      }
+    }
+  </script>
+</section>

@@ -1,0 +1,48 @@
+<script charset="utf-8" src="__STATIC__/kin/kindeditor-all-min.js"></script>
+<script charset="utf-8" src="__STATIC__/kin/lang/zh-CN.js"></script>
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="nav-tabs-custom" style="margin-top: 20px;">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#fa-icons-server" data-toggle="tab">基本信息</a></li>
+        </ul>
+
+        <form action="" enctype="multipart/form-data" method="post" name="qxform" id="qxform">
+        <div class="tab-content">
+          <!-- Font Awesome Icons -->
+          <div class="tab-pane active" style="padding-left: 20px;" id="fa-icons-server">
+            <section id="new">
+              <div class="row fontawesome-icon-list">
+                {foreach $params as $k}
+                <div class="col-md-7 col-sm-4" >
+                  <label>【{$k}】：</label>
+                  <input type="text" name="{$k}" value="{$list[$k]??''}"> 
+                  <span class="icon icon-title margin-small" ></span>
+                </div>
+                {/foreach}
+              </div>
+            </section>
+          </div>
+          
+          <button type="button" class="btn btn-primary" style="margin-top: 10px;margin-bottom:20px;margin-left: 100px;" onclick="qxsubmit();">提交</button><span class="icon icon-ms margin-small" ></span>
+        </div>
+        </form>
+        <!-- /.tab-content -->
+      </div>
+    </div>
+    <!-- /.col -->
+  </div>
+  
+  <script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+  <script type="text/javascript" src="__STATIC__/public/common.js"></script>
+  <script>
+      function qxsubmit() {
+          document.qxform.submit();
+      }
+  </script>
+</section>
+
+
+
+
