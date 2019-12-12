@@ -5,12 +5,25 @@ $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
 
     var active = getUrlParam('active');
+    var wow=getUrlParam('wow');
+    var quey=getUrlParam('quey');
+    var redpackage=getUrlParam('redpackage');
+    if(wow=="2"){
+        $("html, body").animate({ scrollTop: $("#winlist").offset().top }, 'slow');
+    }
+    if(quey=="2"){
+        $("html, body").animate({ scrollTop: $("#quey").offset().top }, 'slow');
+    }
+    if(redpackage=="2"){
+        $("html, body").animate({ scrollTop: $("#redpackage").offset().top }, 'slow');
+    }
     if (active == "1") {
         $("html, body").animate({ scrollTop: $("#login_fp").offset().top }, 'slow');
         //return false;
     }
     if (active == "2") {
         $("html, body").animate({ scrollTop: $("#awards").offset().top }, 'slow');
+        // $("html, body").animate({ scrollTop: $("#winlist").offset().top }, 'slow');
         //return false;
     }
 
@@ -21,15 +34,15 @@ $(document).ready(function () {
     $('.attention').on("click", function (event) {
         $('#attention').modal('show');
     });
-    $('.scroll-login').on("click", function (event) {
-        if ($("#login_fp").length > 0) {
-            $('html,body').animate({ scrollTop: $("#login_fp").offset().top }, 1200);
-        }
-        else {
-            window.location.replace("index.html?active=1");
-        }
-        
-    });
+    // $('.scroll-login').on("click", function (event) {
+    //     if ($("#login_fp").length > 0) {
+    //         $('html,body').animate({ scrollTop: $("#login_fp").offset().top }, 1200);
+    //     }
+    //     else {
+    //         window.location.replace("index.html?active=1");
+    //     }
+    //
+    // });
     $('.awards').on("click", function (event) {
         if ($("#awards").length > 0) {
             $('html,body').animate({ scrollTop: $("#awards").offset().top }, 1200);
@@ -39,9 +52,32 @@ $(document).ready(function () {
         }
        
     });
+    $('.winlist').on("click", function (event) {
+        if ($("#winlist").length > 0) {
+            $('html,body').animate({ scrollTop: $("#winlist").offset().top }, 1200);
+        }
+        else {
+            window.location.replace("winlist.html?wow=2");
+        }
+    });
+    $('.query').on("click", function (event) {
+        if ($("#quey").length > 0) {
+            $('html,body').animate({ scrollTop: $("#quey").offset().top }, 1200);
+        }
+        else {
+            window.location.replace("query.html?quey=2");
+        }
+    });
+
 
     $('.determine').on("click", function (event) {
         $('#determine').modal('show');
+    });
+    $(document).on('change', '[name="classd1"]', function () {
+        $('[name="phone1"]').attr('placeholder', $(this).attr("data-placeholder"));
+    });
+    $(document).on('change', '[name="classd"]', function () {
+        $('[name="phone"]').attr('placeholder', $(this).attr("data-placeholder"));
     });
     $(document).on('click', '.redb .p_img', function () {
         var $this = $(this);
@@ -58,15 +94,35 @@ $(document).ready(function () {
         }
         $('#luck').modal('show');
     });
-    new WOW().init();
+
+
+    $(document).on('click', '.btnNext', function () {
+        var $this = $(this);
+        var content = $(this).closest('div.tab_list');
+        var $index = content.attr("data-index");
+        content.removeClass('active');
+        content.removeClass('animated fadeIn');
+        content.next().addClass("animated fadeIn active");
+        if ($index == "2") {
+            //$("#form").submit();
+
+            ///
+            var jumphref = $(".jump").attr("data-href");
+            setTimeout(function () {
+                window.location.replace(jumphref);
+            }, 3000);
+        }
+    });
+    
+    new WOW().init();
 
 })
 
-//»ñÈ¡urlÖÐµÄ²ÎÊý
+//ï¿½ï¿½È¡urlï¿½ÐµÄ²ï¿½ï¿½ï¿½
 function getUrlParam(name) {
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //¹¹ÔìÒ»¸öº¬ÓÐÄ¿±ê²ÎÊýµÄÕýÔò±í´ïÊ½¶ÔÏó
-    var r = window.location.search.substr(1).match(reg);  //Æ¥ÅäÄ¿±ê²ÎÊý
-    if (r != null) return unescape(r[2]); return null; //·µ»Ø²ÎÊýÖµ
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½
+    var r = window.location.search.substr(1).match(reg);  //Æ¥ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½
+    if (r != null) return unescape(r[2]); return null; //ï¿½ï¿½ï¿½Ø²ï¿½ï¿½ï¿½Öµ
 }
 
 //var yuanwidth = $(window).width();

@@ -36,16 +36,31 @@ class Index extends controller
 
         return $this->fetch();
     }
+    public function winlist()
+    {
+        return $this->fetch();
+    }
     public function Qrcode()
     {
         $no = $this->request->param('no','','strval');
 
-        $img = file_get_contents($_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'/barcodegen/example/html/image.php?filetype=PNG&dpi=72&scale=2&rotation=0&font_family=Arial.ttf&font_size=8&thickness=30&checksum=&code=BCGcode39extended&text='.$no);
+        $img = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'/barcodegen/example/html/image.php?filetype=PNG&dpi=72&scale=2&rotation=0&font_family=Arial.ttf&font_size=8&thickness=30&checksum=&code=BCGcode39extended&text='.$no;
         //$img = file_get_contents('https://'.$_SERVER['HTTP_HOST'].'/barcodegen/example/html/image.php?filetype=PNG&dpi=72&scale=2&rotation=0&font_family=0&font_size=8&thickness=30&checksum=&code=BCGcode39extended&text='.$no);
+        $this->success2('展示成功',['img'=>$img]);
+//        header("Content-Type: image/jpeg;text/html; charset=utf-8");
+//        echo $img;
+//        exit();
+    }
+    public function Qrcode1($no)
+    {
+//        $no = $this->request->param('no','','strval');
 
-        header("Content-Type: image/jpeg;text/html; charset=utf-8");
-        echo $img;
-        exit();
+        $img = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'/barcodegen/example/html/image.php?filetype=PNG&dpi=72&scale=2&rotation=0&font_family=Arial.ttf&font_size=8&thickness=30&checksum=&code=BCGcode39extended&text='.$no;
+        //$img = file_get_contents('https://'.$_SERVER['HTTP_HOST'].'/barcodegen/example/html/image.php?filetype=PNG&dpi=72&scale=2&rotation=0&font_family=0&font_size=8&thickness=30&checksum=&code=BCGcode39extended&text='.$no);
+        return $img;
+//        header("Content-Type: image/jpeg;text/html; charset=utf-8");
+//        echo $img;
+//        exit();
     }
 
     public function login()
@@ -61,27 +76,34 @@ class Index extends controller
 			//$result = $info->where('phone',$data['phone'])->select();
 			//if($result===true)      $this->error("帳號已存在!");
 
-            $result = $info->validate($data);
-            if($result!==true)      $this->error($result);
+//            $result = $info->validate($data);
+//            if($result!==true)      $this->error($result);
 
-            $user = $info->getOne(['phone'=>$data['phone'],'cardno'=>$data['cardno']]);
-            // var_dump($user);exit();
+            $user = $info->getOne(['phone'=>$data['phone']]);
+//            echo $info->getLastSql();
+//             var_dump($user);exit();
 
             if($user){
                 //if($user['phone']!=$data['phone'])      $this->error2('綁定手機號碼錯誤');
+                if($user['cardno']==$data['cardno']){
+                    session('uid',$user['id']);
+                    session('award',0);
+                    session('limit',0);
+                    $this->success2('登錄成功');
+                }else{
+                    $this->error2('您輸入的資料錯誤請重新輸入');
+                }
 
-                session('uid',$user['id']);
-                session('award',0);
-                session('limit',0);
+
             }else{
-                $result = $info->allowField(true)->save($data);
-
-                session('uid',$info['id']);
-                session('award',0);
-                session('limit',0);
+                $this->error2('此號碼不存在，請確認您輸入的資料是否正確或此號碼尚未完成首次登入');
+//                $result = $info->allowField(true)->save($data);
+//
+//                session('uid',$info['id']);
+//                session('award',0);
+//                session('limit',0);
             }
 
-            $this->success2('登錄成功');
             // $this->redirect('index/index');
         }
     }
@@ -90,12 +112,79 @@ class Index extends controller
         session('uid',null);
         session('award',0);
         session('limit',0);
-
-        return $this->fetch();
+        $this->success2('您已成功登出！下次登入時請使用相同手機號碼及出生日期登入，即可查詢抽獎紀錄！');
+//        return $this->fetch();
     }
+    //第一次登入
+    public function login_frist()
+    {
+        $data=$this->request->param();
+        if($data['type']==1){
+            if($data['classd1']==1) {
+                $validate = $this->validate($data, [
+                    'phone1' => 'require|number|length:10,10',
+                ], [
+                    'phone1.require' => '手機號碼不能為空',
+                    'phone1.length' => '手機號碼長度為10位',
+                    'phone1.number' => '必須為數字',
+                ]);
+            }else{
+                $validate = $this->validate($data, [
+                    'phone1' => 'require|number|length:9,10',
+                ], [
+                    'phone1.require' => '市話不能為空',
+                    'phone1.length' => '市話長度為9-10位',
+                    'phone1.number' => '必須為數字',
+                ]);
+            }
+            if($validate===true){
+                $user = (new Users)->getOne(['phone'=>$data['phone1']]);
+                if($user){
+                    $this->error2('此號碼已被使用');
+                }else{
+                    $this->success2('成功');
+                }
+            }else{
+                $this->error2($validate);
+            }
+        }else{
+            $validate = $this->validate($data, [
+                'cardno1' => 'require|number|length:6,6',
+                'recardno1' => 'require|number|length:6,6|confirm:cardno1',
+            ], [
+                'cardno1.require' => '生日不能为空',
+                'cardno1.length' => '出生日期為6碼',
+                'cardno1.number' => '必須為數字',
+                'recardno1.require' => '重複生日不能为空',
+                'recardno1.length' => '出生日期為6碼',
+                'recardno1.number' => '必須為數字',
+                'recardno1.confirm' => '您輸入兩次的出生日期不相同請重新輸入',
+            ]);
+            if($validate===true){
+//                $this->success2('退出成功',$data);
+                $users=new Users;
+                $result = $users->allowField(true)->save(['phone'=>$data['phone1'],'cardno'=>$data['cardno1'],'add_time'=>date('Y-m-d H:i:s')]);
+//                var_dump();exit();
+                if($result){
+                    session('uid',$users->id);
+                    session('award',0);
+                    session('limit',0);
+                    $this->success2('設定成功');
+                }else{
+                     $this->error2('設定失敗');
+                }
+            }else{
+                $this->error2($validate);
+            }
+        }
+        $this->success2('退出成功',$data);
 
+    }
+    //登入发票
     public function enter()
     {
+//        echo 11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111;
+//        return $this->fetch('index');
         /*$award = session('award');
         $limit = session('limit');
         $award += 1;
@@ -106,18 +195,20 @@ class Index extends controller
             if(!$this->view->uid)       $this->error2('請先登入會員');
 
             $data = $this->request->only(['no1_1','no1_2','no2','date','code','money']);
-
+            $data['no1']=$data['no1_1'].$data['no1_2'];
             $info = new Invoices;
             $result = $info->validate($data);
             if($result!==true)      $this->error($result);
 
-            $one = $info->getOne(['no1'=>$data['no1_1'].$data['no1_2'],'no2'=>$data['no2'],'date'=>$data['date'],'code'=>$data['code'],'money'=>$data['money']]);
+            $one = $info->getOne(['no1'=>$data['no1'],'no2'=>$data['no2']]);
 
             //新發票
             if (!$one) {
+                if($data['money']<588) $this->error2('發票金額滿588元才能進行抽獎喔!');
                 $data['uid'] = $this->view->uid;
                 $data['total_times'] = floor($data['money']/588);
                 $data['remain_times'] = $data['total_times'];
+                $data['add_time']=date('Y-m-d H:i:s');
                 $result = $info->allowField(true)->save($data);
                 if($result===1){
                     // $award = session('award');
@@ -134,19 +225,25 @@ class Index extends controller
                     session('limit',$data['remain_times']);
                     session('code',!empty($data['code']));
                     session('in_id',$info->id);
-
-                    $this->success2('操作成功',['award'=>$data['remain_times'],'limit'=>$data['remain_times']]);
+//                    return $this->fetch('award');
+                    $this->success2('發票資訊輸入完成，立即抽紅包！',['award'=>$data['remain_times'],'limit'=>$data['remain_times']]);
                 }else{
                     $this->error2('操作失敗'); 
                 }
             }
+            //驗證其他欄目
+            if($one->date != $data['date'] || $one->code != $data['code'] || $one->money != $data['money']){
+                $this->error2('發票資訊不符，請確認您輸入的發票資訊是否正確');
+            }
             //發票抽獎次數用完
-            if($one->remain_times == 0)                    $this->error2('該發票已使用!剩餘抽獎次數為0次!');
+            if($one->remain_times == 0)                    $this->error2('該發票無剩餘抽獎次數！');
             
             //未抽完的發票
             if ($one->remain_times > 0) {
                 $data['uid'] = $this->view->uid;
-                
+                if($this->view->uid != $one['uid']){
+                    $this->error2('該發票已被別人使用');
+                }
                 $award = $one->total_times;
                 $limit = $one->remain_times;
                 session('award',$award);
@@ -154,14 +251,48 @@ class Index extends controller
                 session('code',!empty($data['code']));
                 session('in_id',$one['id']);
 
-
-                $this->success2('操作成功',['award'=>$award,'limit'=>$limit]);
+//                return $this->fetch('award');
+                $this->success2('發票資訊輸入完成，立即抽紅包！',['award'=>$award,'limit'=>$limit]);
             }else{
                 $this->error2('操作失敗'); 
             }   
                                 
         }
     }
+    public function red_env()
+    {
+        if(!$this->view->uid) {   return $this->fetch('index');}
+        $award = session('award');
+        $limit = session('limit');
+        $code = session('code');
+        $in_id = session('in_id');
+        $this->assign('award',$award);
+        $this->assign('limit',$limit);
+        return $this->fetch();
+    }
+    //查詢記錄
+    public function query()
+    {
+        if(!$this->view->uid) {   return $this->fetch('record-1');}
+        $uid=$this->view->uid;
+        $info = (new Coupons)->getAll1(['uid'=>$uid]);
+        $info_bool=(new Coupons)->getAll(['uid'=>$uid]);
+//        $aa=boolval($info);
+//        var_dump($aa);exit();
+
+        if(!$info_bool){
+            return $this->fetch('record-2');
+        }
+        foreach ($info as $key => $value)
+        {
+            $info[$key]['qrcode']=$this->Qrcode1($value['no']);
+        }
+//        $info=Db::table('info_coupon')->where('uid',$uid)->select();
+        $this->assign('info',$info);
+        $this->assign('date_time',date('Y-m-d H:i:s',time()-86400));
+        return $this->fetch();
+    }
+    //抽獎
     public function award()
     {
         if(!$this->view->uid)       $this->error2('請先登入會員');
@@ -188,6 +319,8 @@ class Index extends controller
 
         // 抽獎--確定獎品分類
         $num = $num2 = $type_id = $rand = 0;
+
+
         foreach ($infocatetypes as $k => $v) {
             if(isset($couGroup[$k]))    $num += $v;
         }
@@ -204,6 +337,7 @@ class Index extends controller
 
         // 抽獎--確定獎品--按順序
         $info = (new Coupons)->getOne(['type_id'=>$type_id,'status'=>0]);
+//        exit(json_encode($types));
         if(!$info)                  $this->error2('獎品不存在');
         
         $limit--;
@@ -216,19 +350,19 @@ class Index extends controller
     public function use()
     {
 	
-        if(!$this->view->uid)       $this->error2('請先登入會員');
-
+//        if(!$this->view->uid)       $this->error2('請先登入會員');
+//        return $this->error2('a');
         $id = $this->request->param('id','','strval');
 
         $info = (new Coupons)->getOne(['id'=>$id]);
         // var_dump($info);exit();
         if(!$info)                              $this->error2('獎項不存在');
-        if($info['uid']!=$this->view->uid)      $this->error2('獎項不存在');
+//        if($info['uid']!=$this->view->uid)      $this->error2('獎項不存在');
         if($info['status']==2)                  $this->error2('獎項已使用');
         if($info['status']==3)                  $this->error2('發票錯誤');
 
-        $list_cate = (new InfoCateTypes)->getMap2();
-        if( $list_cate[$info['type_id']]['time_limit']==1 && $info['get_time']+86400>time())      $this->error2('獎項還在凍結中');
+//        $list_cate = (new InfoCateTypes)->getMap2();
+//        if( $list_cate[$info['type_id']]['time_limit']==1 && $info['get_time']+86400>time())      $this->error2('獎項還在凍結中');
 
         // 旧数据
         if($info['in_id']==0 && $info['get_time']<strtotime('2018-12-28')){
@@ -236,15 +370,20 @@ class Index extends controller
             if($result===1)         $this->success2('使用成功');
             else                    $this->error2('使用失敗：'.$result);
         }
-		
-		//全部放行
-		if($info['type_id']<16){
-            $result = $info->allowField(true)->save(['status'=>2,'use_time'=>time()]);
-            if($result===1)         $this->success2('使用成功');
-            else                    $this->error2('使用失敗：'.$result);
-        }
-		
-		//加價購放行
+        $result = $info->allowField(true)->save(['status'=>2,'use_time'=>time()]);
+        if($result===1)         $this->success2('使用成功');
+        else                    $this->error2('使用失敗：'.$result);
+
+        //全部放行
+//		if($info['type_id']<17){
+//            $result = $info->allowField(true)->save(['status'=>2,'use_time'=>time()]);
+//            if($result===1)         $this->success2('使用成功');
+//            else                    $this->error2('使用失敗：'.$result);
+//        }
+
+//        return $this->error2('a');
+
+        //加價購放行
 		/*if($info['type_id']==12 or $info['type_id']==13){
             $result = $info->allowField(true)->save(['status'=>2,'use_time'=>time()]);
             if($result===1)         $this->success2('使用成功');

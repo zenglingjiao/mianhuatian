@@ -19,7 +19,7 @@
               <td>{$vo.type_name}</td>
               <td>{$vo.title}</td>
               <td>{$model->status_arr[$vo['status']]}</td>
-              <td>{$users->getF($vo['uid'],'cardno')}</td>
+              <td>{$users->getP($vo['uid'],'phone')}</td>
               <td>{if $vo['get_time']>0}{$vo.get_time|date='Y-m-d H:i'}{/if}</td>
               <td>{if $vo['use_time']>0}{$vo.use_time|date='Y-m-d H:i'}{/if}</td>
               <td>

@@ -3,7 +3,8 @@
     <h3 class="box-title">{$weizhi.title}</h3>
 
     <div class="box-right" style="padding-right: 200px;">
-      <a href="{:url($_c.'/userExport')}?{:http_build_query($_GET)}"><i class="fa fa-download"></i> 匯出</a>
+        <a href="{:url($_c.'/userExport')}?{:http_build_query($_GET)}"><i class="fa fa-download"></i> 匯出</a>
+        <a href="{:url($_c.'/checkInvoice')}"><i class="fa fa-download"></i> 验证发票</a>
     </div>
   </div>
   <!-- /.box-header -->
@@ -12,7 +13,7 @@
         <div class="col-md-5 col-sm-4" style="line-height: 30px;margin-top: 15px;">
             <div class="form-group">
               <span style="width: 30%;display: block;float: left;">會員篩選：</span>
-              <input type="text" name="key" class="input-sm pjaxchangge" style="width: 50%;" value="{$param.key|default=''}" placeholder="會員卡號、手機號碼">
+              <input type="text" name="key" class="input-sm pjaxchangge" style="width: 50%;" value="{$param.key|default=''}" placeholder="會員生日、手機號碼">
             </div>
 			<!--<div class="form-group">
 			    <form method="post" action="userjoin">

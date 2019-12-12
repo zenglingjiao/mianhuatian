@@ -1,0 +1,109 @@
+<script>
+    function removebg()
+    {
+        $(document).on('click', '.close', function () {
+            $('.modal').modal('hide');
+        })
+    }
+    $(function () {
+
+        $('.scroll-login').on("click", function (event) {
+            ab='{$uid}';
+            if(ab){
+                if ($("#login_fp").length > 0) {
+                    $('html,body').animate({ scrollTop: $("#login_fp").offset().top }, 1200);
+                }
+                else {
+                    window.location.replace("index.html?active=1");
+                }
+            }else {
+                $('#mobel_demo').modal('show');
+            }
+
+
+        });
+
+        //點擊首次登陸
+        $('#login_frist').click(function (event) {
+            $('#mobel_demo1').modal('show');
+            $('#mobel_demo').hide();
+            $('#cardno1').hide();
+            $('#recardno1').hide();
+            $('#fanl').hide();
+            $('#phone1').show();
+            $('#classd1').show();
+
+            //清空所有文本框的值
+            $("input[type='text']").val("");
+            $("input[name=type]").val(1);
+
+        });
+        //首次登入
+        $('#next').click(function (event) {
+            var type=$("input[name=type]").val();
+            $.post('{:url('index/login_frist')}', $("#loginform1").serialize(), function(data, textStatus, xhr) {
+                if(data.code==1){
+                    console.log(data)
+                    if(type==1) {
+                        $("input[name=type]").val(2);
+                        $('#phone1').hide();
+                        $('#classd1').hide();
+                        $('#cardno1').show();
+                        $('#recardno1').show();
+                        $('#fanl').show();
+                        // alert(data.msg);
+                    }else{
+                        // alert(data.msg);
+                        $('#form1').hide();
+                        $('.tab_list').addClass("animated fadeIn active");
+                        var jumphref = $(".jump").attr("data-href");
+                        setTimeout(function () {
+                            window.location.replace(jumphref);
+                        }, 3000);
+                    }
+
+                }else{
+                    alert(data.msg);
+                    console.log(data);
+
+                }
+            },'json');
+        })
+        // 登錄
+        $("#login").click(function(event) {
+            classd = $("input[name=classd]:checked").val();
+            console.log(classd);
+            phone = $.trim($("input[name=phone]").val());
+            if(classd==1){
+                if(phone.length != 10){
+                    alert("您輸入的格式錯誤,手機號碼為10碼");
+                    $("input[name=phone]").focus();
+                    return false;
+                }
+            }else {
+                if(phone.length < 9 || phone.length >10){
+                    alert("您輸入的格式錯誤,市話為9-10碼含區碼");
+                    $("input[name=phone]").focus();
+                    return false;
+                }
+            }
+            cardno = $.trim($("input[name=cardno]").val());
+            if(cardno.length != 6){
+                alert("您輸入的格式錯誤,出生日期為6碼");
+                $("input[name=cardno]").focus();
+                return false;
+            }
+
+            $.post('{:url('index/login')}', $("#loginform").serialize(), function(data, textStatus, xhr) {
+                if(data.code==1){
+                    window.location.href = 'index.html';
+                }else{
+                    alert(data.msg);
+                }
+            },'json');
+
+            // $("#loginform").submit();
+            return false;
+        });
+    })
+</script>

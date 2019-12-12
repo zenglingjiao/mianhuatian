@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh=TW">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, initial-scale=1.0, user-scalable=no">
+      <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <!--上線後刪除此段Meta與註解-->
+    <meta name="robots" content="noindex, nofollow,noarchive,nosnippet,noimageindex,noodp">
+    <!-- End 測試站防止被爬蟲搜尋-->
+    <title>抽紅包 | 棉花田</title>
+
+
+    <!-- Bootstrap core CSS -->
+   <link href="/assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+   <link href="/assets/css/animate.css" rel="stylesheet">
+   <link href="/assets/libs/datepicker/css/datepicker.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="/assets/css/index.css?1.0" rel="stylesheet">
+    <link href="/assets/css/index_mobel.css?1.0" rel="stylesheet">
+  </head>
+  <body>
+  {include file="header" /}
+<style>
+    .ad_title1 {
+        background: rgba(255,231,113,1);
+        font-size: 23px;
+        font-weight: bold;
+        line-height: 36px;
+        color: rgba(171,38,52,1);
+        margin-top: 36px;
+        padding: 20px 10px;
+
+    }
+</style>
+<div class="main-wrapper" id="app">
+
+    <div class="banner-wrapper banner">
+        <img src="/assets/images/banner.png" class="img-fluid" />
+        <div class="side_float gift_1 wow fadeInUp" data-wow-delay="0.5s"></div>
+        <div class="side_float gift_2 wow fadeInUp" data-wow-delay="0.6s"></div>
+        <div class="side_float gift_3 wow fadeInLeft" data-wow-delay="0.7s"></div>
+        <div class="side_float z_1 wow fadeIn" data-wow-delay="0.6s"></div>
+        <div class="side_float z_2 wow fadeInDown" data-wow-delay="0.6s"></div>
+        <div class="side_float z_3 wow zoomIn" data-wow-delay="0.5s"></div>
+        <div class="side_float z_4 wow zoomIn" data-wow-delay="0.5s"></div>
+        <div class="side_float z_5 wow slideInDown" data-wow-delay="0.5s">
+            <!--程式說明 ※上程式後刪除-->
+            <!--alert-login 為登入前 跳出會員登入畫面-->
+            <!--scroll-login 為登入後 錨點至下方登錄發票-->
+            <a href="javascript:void(0);" class="login scroll-login">登錄發票</a>
+
+        </div>
+    </div>
+
+
+    <section class="conner_wrapper" id="redpackage">
+        <div class="hi_conner_bg pt-5">
+            <div class="container">
+                <div class="hi_box">
+                    <h2 class="h-title hi"><img src="/assets/images/hi_tice.png" /> 好運紅包任你抽</h2>
+                    <div class="block prize1">
+                        <div class="red_title">
+                            <h2 class="">共可以抽<span class="b" style="font-size: 8vw;">{{award}}</span>包紅包，還剩<span class="b r" style="font-size: 8vw;">{{limit}}</span>次機會</h2>
+                        </div>
+                         <!--程式說明 ※上程式後刪除-->
+                        <!--data-title 為演示 ※上程式後刪除-->
+                        <!--data-z 為演示 ※上程式後刪除-->
+                        <div class="row redb wow fadeIn" data-wow-delay="0.3s">
+                            <div class="col-md-5-5 col-6">
+                                <div @click="cj()" class="p_img" data-title="指定商品加價購" data-z="">
+                                    <img src="/assets/images/red.png" />
+                                </div>
+                            </div>
+                            <div class="col-md-5-5 col-6" data-title="現金禮券 30 元" data-z="2">
+                                <div @click="cj()" class="p_img" data-title="現金禮券 30 元" data-z="">
+                                    <img src="/assets/images/red.png" />
+                                </div>
+                            </div>
+                            <div class="col-md-5-5 col-6">
+                                <div class="p_img" @click="cj()">
+                                    <img src="/assets/images/red.png" />
+                                </div>
+                            </div>
+                            <div class="col-md-5-5 col-6">
+                                <div class="p_img" @click="cj()">
+                                    <img src="/assets/images/red.png" />
+                                </div>
+                            </div>
+                            <div class="col-md-5-5 col-6">
+                                <div class="p_img" @click="cj()">
+                                    <img src="/assets/images/red.png" />
+                                </div>
+                            </div>
+                            <div class="col-md-5-5 col-6">
+                                <div class="p_img" @click="cj()">
+                                    <img src="/assets/images/red.png" />
+                                </div>
+                            </div>
+                            <div class="col-md-5-5 col-6">
+                                <div class="p_img" @click="cj()">
+                                    <img src="/assets/images/red.png" />
+                                </div>
+                            </div>
+                            <div class="col-md-5-5 col-6">
+                                <div class="p_img" @click="cj()">
+                                    <img src="/assets/images/red.png" />
+                                </div>
+                            </div>
+                            <div class="col-md-5-5 col-6">
+                                <div class="p_img" @click="cj()">
+                                    <img src="/assets/images/red.png" />
+                                </div>
+                            </div>
+                            <div class="col-md-5-5 col-6">
+                                <div class="p_img" @click="cj()">
+                                    <img src="/assets/images/red.png" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!--登錄demo-->
+    <div class="modal"  id="mobel_demo" data-backdrop="static">
+      <div class="modal-dialog cottonfeild login " >
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <img src="/assets/images/close.png" />
+            </button>
+          </div>
+          <div class="modal-body">
+              <h3 class="model_title">歡迎來到棉花田</h3>
+              <form>
+                   <div class="form-group">
+                        <i class="b-icon phone"><img src="/assets/images/phone.png" /></i>
+                        <input type="text" name="phone" class="form-control form-control-lg" placeholder="請輸入手機號碼" />
+                  </div>
+                   <div class="form-group">
+                        <i class="b-icon password"><img src="/assets/images/password.png" /></i>
+                        <input type="text" name="phone" class="form-control form-control-lg" placeholder="會員卡號或店號" />
+                  </div>
+                   <div class="form-group">
+                     <button type="button" class="btn btn-block btn-lg btn-alert">登入</button>
+                  </div>
+              </form>
+              <div class="modal-header"></div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+
+
+
+    <!--抽獎demo-->
+    <div class="modal fade"  id="luck" data-backdrop="static">
+      <div class="modal-dialog cottonfeild  modal-md modal-dialog-popout " >
+        <div class="modal-content" id="tc">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <img src="/assets/images/close.png" />
+            </button>
+          </div>
+          <div class="modal-body">
+              <h3 class="model_title">恭喜您抽到了<span>{{type.title}}</span></h3>
+                <img :src="type.img" class="img-fluid" />
+                <div class="ad_title1" v-if="type.time_limit == 1">活動抽獎序號將於隔日中午 12 時顯示，請稍候！</div>
+                <h4 class="list"><img src="/assets/images/101.png" width="40"  style="margin-right:10px;" />注意事項：</h4>
+                {{type.desc}}
+                <h4 class="list"><img src="/assets/images/102.png" width="40"  style="margin-right:10px;"  />使用方式：</h4>
+                {{type.used}}
+                <p>&nbsp;</p>
+                <div class="row">
+                    <div class="col-6"><button type="button" class="btn btn-block btn-lg btn-again" data-dismiss="modal" aria-label="Close">繼續抽紅包</button></div>
+                    <div class="col-6"><a class="btn btn-block btn-lg btn-alert"  href="query.html">查詢中獎紀錄</a></div>
+                </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+     <!--注意事項demo-->
+    <div class="modal fade"  id="attention" data-backdrop="static">
+      <div class="modal-dialog cottonfeild modal-lg modal-dialog-popout" >
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <img src="/assets/images/close.png" />
+            </button>
+          </div>
+          <div class="modal-body">
+              <h3 class="model_title">注意事項</h3>
+              <p>1. 欲參加抽獎活動不同張發票恕不累積發票金額。</p>
+              <p>2. 本抵用券、兌換券序號使用期限至 2019/2/19，逾期恕無法兌換，每券限使用乙次。</p>
+              <p>3. 加價購商品序號使用期限至 2019/2/19，逾期恕無法兌換，每券限使用乙次本券須於下壹筆消費使用，恕不兌換現金或找零，也不列入會員消費累積。</p>
+              <p>4. 本序號券不限門市使用，僅限於棉花田實體門市使用。</p>
+              <p>5. 本券壹經使用不得退換或要求補發，抵用券/兌換券/加價購商品序號，數量有限，送/售完為止。</p>
+              <p>6. 基於個人資料保護法保護個資原則，棉花田生機園地絕不外洩參與活動者之個人資料。惟活動者於參加本活動前了解並同意主辦單位於本活動之範圍內，得蒐集、處理及利用本人之個人資料(包括但不限於姓名、e-mail、手機、會員卡號等)。</p>
+              <p>7. 活動辦法若有未盡事宜，棉花田保有隨時解釋、變更活動辦法與獎品內容，以及暫停、延長、提前終止本活動之權利。並公告於本公司活動網站，將不另行通知。</p>
+              <p>&nbsp;</p>
+              <p>與我們聯繫：</p>
+              <p>客服信箱：sun@oneness.tw。</p>
+              <p>客服專線：0800-559-588。</p>
+              <p>服務時間週一 ~ 週五 08:30 ~ 17:30</p>
+              <div class="modal-header"></div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+
+</div>
+
+
+
+
+    <footer>
+        <div class="container">
+            <p>版權所有 棉花田生機園地股份有限公司</p>
+            <p>© 2019 Cotton Field Organic Co.,Ltd. All Rights Reserved</p>
+            <p>客服專線：0800-559-588</p>
+        </div>
+    </footer>
+
+
+
+
+    <script type="text/javascript" src="/assets/js/vendor/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/assets/bootstrap/js/popper.min.js"></script>
+    <script type="text/javascript" src="/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/assets/libs/datepicker/js/datepicker.min.js"></script>
+    <script type="text/javascript" src="/assets/libs/datepicker/js/datepicker.zh.min.js"></script>
+    <script type="text/javascript" src="/assets/js/wow.min.js"></script>
+    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js">
+    </script>
+
+    <script type="text/javascript" src="/assets/js/all.js?1.0"></script>
+    {include file="footer" /}
+     <script>
+         $(document).ready(function(){
+             $('.datepicker-here').datepicker({ autoClose:true, });
+         })
+         var app = new Vue({
+             el: '#app',
+             data: {
+                 type: '',
+                 award:{$award},
+                 limit:{$limit}
+             },
+             mounted: function () {
+
+             },
+             methods: {
+                 cj(){
+                     $.ajax({
+                         // async: true,
+                         type: 'POST',
+                         dataType: 'json',
+                         data:  {},
+                         url: '{:url('index/award')}',
+                         success: function (res) {
+                             if(res.code==1){
+                                 app.type=res.data.type;
+                                 app.limit -=1;
+                             }else {
+                                 alert(res.msg);
+                                 document.getElementById('luck').style.visibility="hidden";
+                                 document.location.href='{:url('index/red_env')}';
+                             }
+                             console.log(res);
+                             // app.column = res.data[0];
+                         },
+                         error: function (res) {
+                             console.log(res);
+                         }
+                     });
+                 }
+             },
+         })
+         // $(function () {
+         //     $('.p_img').click(function () {
+         //          $.ajax({
+         //              // async: true,
+         //              type: 'POST',
+         //              dataType: 'json',
+         //              data:  {},
+         //              url: '{:url('index/award')}',
+         //              success: function (res) {
+         //                  if(res.code==1){
+         //
+         //                  }else {
+         //                      alert(res.msg);
+         //                  }
+         //                  console.log(res);
+         //                  // app.column = res.data[0];
+         //              },
+         //              error: function (res) {
+         //                  console.log(res);
+         //              }
+         //          });
+         //     })
+         // })
+     </script>
+  </body>
+</html>

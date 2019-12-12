@@ -14,5 +14,8 @@
 
 // user 别名路由到 index/User 控制器
 Route::alias('manage','admin/Index/index');
+Route::alias('back','admin/info/userlist');
 Route::alias('2019cny_cotton','index/Index/index');
+Route::alias('query','index/Index/query');
+Route::alias('winlist','index/Index/winlist');
 

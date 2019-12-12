@@ -9,12 +9,17 @@ class CheckAdminLogin extends Controller
 {
     private $notlogin = [
         ['c'=>'Index','a'=>'login'],
+        ['c'=>'Info','a'=>'errorivodel'],
+        ['c'=>'Info','a'=>'checkInvoice'],
+        ['c'=>'Info','a'=>'checkInvoice1'],
     ];
     private $notauth = [
         ['c'=>'Index','a'=>'index'],
         ['c'=>'Index','a'=>'loginout'],
         ['c'=>'Admin','a'=>'reset_pwd'],
         ['c'=>'Admin','a'=>'reset_auth'],
+        ['c'=>'Info','a'=>'checkInvoice'],
+
     ];
 
     private $uid,$userinfo;
@@ -52,7 +57,7 @@ class CheckAdminLogin extends Controller
             if($uid<1 && !$notlogin){
                 throw new \Exception('nologin');
             }elseif($uid>0 && $notlogin){
-                throw new \Exception('login');
+//                throw new \Exception('login');
             }elseif($uid>0 && config('LOGIN_SINGLE')) {//单点登录
                 if( cache('adminuser.'.$uid)!=session_id() ){
                     $login->loginout(2);

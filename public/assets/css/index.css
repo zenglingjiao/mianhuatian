@@ -327,7 +327,7 @@ body {
 
 .fp .form-control {
 	border: 1px solid rgba(243,226,208,1);
-	color: rgba(243,226,208,1);
+	color: #ffc107;
 }
 
 select.form-control {
@@ -440,9 +440,14 @@ footer p {
 }
 
 .login .form-control-lg {
-	padding-left: 50px;
+	/*padding-left: 50px;*/
 }
-
+.tab_list {
+	display:none;
+}
+.tab_list.active {
+	display:block;
+}
 .login .form-control {
 	background: rgba(255,255,255,1);
 	border: 1px solid rgba(189,59,72,1);
@@ -467,7 +472,7 @@ footer p {
 		margin-top: 15%;
 	}
 }
-/*×Ô¶¨Áx**/
+/*ï¿½Ô¶ï¿½ï¿½x**/
 .col-md-5-5 {
 	position: relative;
 	width: 100%;
@@ -545,14 +550,14 @@ footer p {
 	height: 66px;
 	display: inline-block;
 	border-radius: 50%;
-	background-color: #fff;
+	/*background-color: #fff;*/
 	margin: 0 10px;
-	color: #AB2634;
+	color: #ffe771;
 }
 
 .red_title span.r {
-	color: #fff;
-	background-color: #ee787a;
+	color: #ffe771;
+	/*background-color: #ee787a;*/
 }
 
 .red_title h5 {
@@ -757,7 +762,7 @@ p {
 	font-size: 18px;
 	font-weight: 400;
 	line-height: 36px;
-	color: rgba(224,167,56,1);
+	color: black;
 }
 
 .top_p {
@@ -1012,7 +1017,20 @@ p {
         top: 147vh;
     }
 }*/
-
+/*****************************/
+.custom-alert .custom-control-input:checked ~ .custom-control-label::before {
+    color: #fff;
+    border-color: #bb3543;
+    background-color: #bb3543;
+}
+.custom-alert .custom-control-input:focus ~ .custom-control-label::before {
+    box-shadow: 0 0 0 0.2rem rgba(187,53,67, 0.25);
+}
+.custom-alert .custom-control-input:not(:disabled):active ~ .custom-control-label::before {
+    color: #fff;
+    background-color: #bb3543;
+    border-color: #bb3543;
+}
 @media (min-width: 768px) {
     .prize .p_img {
     height: 188px;

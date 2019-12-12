@@ -41,6 +41,7 @@ class Info extends controller
         $this->assign('param', $param);
         $this->assign('model', $model);
         $this->assign('users', (new Users));
+        $this->assign('coupons', (new Coupons));
 
         if($this->request->isPjax()) {
             Container::get('config')->set('default_ajax_return', 'html');
@@ -98,6 +99,7 @@ class Info extends controller
         $this->assign('param', $param);
         $this->assign('model', $model);
         $this->assign('users', (new Users));
+        $this->assign('coupons', (new Coupons));
 
         if($this->request->isPjax()) {
             Container::get('config')->set('default_ajax_return', 'html');
@@ -178,7 +180,8 @@ class Info extends controller
 
         $cardno = $this->request->param('cardno','','strval');
         if($cardno){
-            $user = (new Users)->getOne(['cardno'=>$cardno]);
+            $user = (new Users)->getOne(['phone'=>$cardno]);
+//            var_dump((new Users)->getLastSql());exit;
             if($user){
                 $param['uid'] = $user['id'];
             }
@@ -186,7 +189,7 @@ class Info extends controller
 
         $model = new Invoices;
         $list = $model->getList($param);
-        // dump($list);exit;
+//         var_dump($list);exit;
 
         $this->assign('list', $list);
         $this->assign('param', $param);
@@ -201,8 +204,19 @@ class Info extends controller
         }
     }
 
-    
 
+    //重置生日
+    public function reset_pwd()
+    {
+        $data = $this->request->param();
+//        $this->error2('操作錯誤：',$data);
+        $model = Users::get($data['id']);
+        if(!$model)     $this->success('數據不存在！');
+
+        $result = $model->allowField(true)->save($data);
+        if($result)         $this->success('修改成功！');
+        else                $this->error('修改失敗！');
+    }
 
 	//刪除
      public function userinvoiceajaxDel() {
@@ -210,9 +224,24 @@ class Info extends controller
         $model = Invoices::get($id);
         if(!$model)     $this->success('數據不存在！');
 
-        $result = $model->delete();
-        if($result)         $this->success('操作成功！');
-        else                $this->error('操作錯誤：'.$result);
+
+         $result = $model->delete();
+        if($result) {
+            $data=Db::table('info_coupon')->where('in_id',$id)->where('type_id','<',12)->select();
+            foreach ($data as $key =>$value){
+                $qqq=[
+                    'status'=>0,
+                    'uid'=>0,
+                    'get_time'=>0,
+                    'use_time'=>0,
+                    'in_id'=>0,
+                ];
+                (new Coupons)->allowField(true)->save($qqq,['id'=>$value['id']]);
+            }
+            $this->success('操作成功！');
+        } else {
+            $this->error('操作錯誤：' . $result);
+        }
     }
 
 
@@ -455,7 +484,7 @@ class Info extends controller
     }
     public function userExport() {
         $param = $this->request->param();
-        // var_dump($param);exit;
+//         var_dump($param);exit;
 
         $model = new Users;
         $cnt = $model->getCount($param);
@@ -473,6 +502,121 @@ class Info extends controller
 
         foreach ($list as $k => $v) {
             $PHPSheet->setCellValue("A".($k+2),$v['id'])->setCellValue("B".($k+2),$v['cardno'])->setCellValue("C".($k+2),$v['phone']);
+        }
+
+        ob_end_clean();
+        $fileName = iconv("utf-8", "gb2312", 'Export.xlsx'); // 重命名表
+        $PHPWriter = \PHPExcel_IOFactory::createWriter($PHPExcel,"Excel2007");//創建生成的格式
+        header('Content-Disposition: attachment;filename="'.$fileName.'"');//下載下來的表格名
+        header("Content-Type: application/force-download");
+        header("Content-Type: application/octet-stream");
+        header("Content-Type: application/download");
+        header('Content-Type: application/vnd.ms-excel');
+        $PHPWriter->save("php://output"); //表示在$path路徑下面生成demo.xlsx文件
+    }
+    public function userinvoiceExport() {
+        $param = $this->request->param();
+//        var_dump($param);exit;
+
+        $model = new Invoices;
+        $cnt = $model->getCount($param);
+//        var_dump($model->getLastSql());exit;
+
+        if($cnt>10000)  exit('最大匯出記錄條數10000條');
+
+        $list = $model->getAll($param);
+        // var_dump($list);
+
+        require '../extend/phpexcel/PHPExcel.php';
+        $PHPExcel = new \PHPExcel();
+        $PHPSheet = $PHPExcel->getActiveSheet();
+        $PHPSheet->setTitle("匯出表"); //給當前活動sheet設置名稱
+
+        $PHPSheet->setCellValue("A1","NO")
+            ->setCellValue("B1","用戶")
+            ->setCellValue("C1","電話號碼")
+            ->setCellValue("D1","發票號碼")
+            ->setCellValue("E1","購買日期")
+            ->setCellValue("F1","隨機碼")
+            ->setCellValue("G1","金額")
+            ->setCellValue("H1","狀態")
+            ->setCellValue("I1","描述");
+
+        foreach ($list as $k => $v) {
+            $user=(new Users)->getOne(['id'=>$v['uid']]);
+            if($v['status']==0) {
+                $status = "未校驗";
+            }elseif ($v['status']==1) {
+                $status = "校驗成功";
+            }else{
+                $status = "校驗失敗";
+            }
+            $PHPSheet->setCellValue("A".($k+2),$v['id'])
+                ->setCellValue("B".($k+2),$user['id'])
+                ->setCellValue("C".($k+2),$user['phone'])
+                ->setCellValue("D".($k+2),$v['no1'].'-'.$v['no2'])
+                ->setCellValue("E".($k+2),$v['date'])
+                ->setCellValue("F".($k+2),$v['code'])
+                ->setCellValue("G".($k+2),$v['money'])
+                ->setCellValue("H".($k+2),$status)
+                ->setCellValue("I".($k+2),$v['msg']);
+        }
+
+        ob_end_clean();
+        $fileName = iconv("utf-8", "gb2312", 'Export.xlsx'); // 重命名表
+        $PHPWriter = \PHPExcel_IOFactory::createWriter($PHPExcel,"Excel2007");//創建生成的格式
+        header('Content-Disposition: attachment;filename="'.$fileName.'"');//下載下來的表格名
+        header("Content-Type: application/force-download");
+        header("Content-Type: application/octet-stream");
+        header("Content-Type: application/download");
+        header('Content-Type: application/vnd.ms-excel');
+        $PHPWriter->save("php://output"); //表示在$path路徑下面生成demo.xlsx文件
+    }
+    //錯誤發票
+    public function errorinvoiceExport() {
+        $param = $this->request->param();
+//        var_dump($param);exit;
+        $param['status'] = 2;
+        $model = new Invoices;
+        $cnt = $model->getCount($param);
+//        var_dump($model->getLastSql());exit;
+
+        if($cnt>10000)  exit('最大匯出記錄條數10000條');
+
+        $list = $model->getAll($param);
+        // var_dump($list);
+
+        require '../extend/phpexcel/PHPExcel.php';
+        $PHPExcel = new \PHPExcel();
+        $PHPSheet = $PHPExcel->getActiveSheet();
+        $PHPSheet->setTitle("匯出表"); //給當前活動sheet設置名稱
+
+        $PHPSheet->setCellValue("A1","NO")
+            ->setCellValue("B1","用戶")
+            ->setCellValue("C1","發票號碼")
+            ->setCellValue("D1","購買日期")
+            ->setCellValue("E1","隨機碼")
+            ->setCellValue("F1","金額")
+            ->setCellValue("G1","狀態")
+            ->setCellValue("H1","描述");
+
+        foreach ($list as $k => $v) {
+            $user=(new Users)->getOne(['id'=>$v['uid']]);
+            if($v['status']==0) {
+                $status = "未校驗";
+            }elseif ($v['status']==1) {
+                $status = "校驗成功";
+            }else{
+                $status = "校驗失敗";
+            }
+            $PHPSheet->setCellValue("A".($k+2),$v['id'])
+                ->setCellValue("B".($k+2),$user['cardno'])
+                ->setCellValue("C".($k+2),$v['no1'].'-'.$v['no2'])
+                ->setCellValue("D".($k+2),$v['date'])
+                ->setCellValue("E".($k+2),$v['code'])
+                ->setCellValue("F".($k+2),$v['money'])
+                ->setCellValue("G".($k+2),$status)
+                ->setCellValue("H".($k+2),$v['msg']);
         }
 
         ob_end_clean();
@@ -607,7 +751,7 @@ class Info extends controller
     {   
         $model = new Invoices;
         // $result= $model->query("select * from info_invoice where date < DATE('2018-12-27') and status=0 and msg=''")->paginate(5);
-        $result = $model->where('date','<',DATE('2018-12-26'))->where('status',0)->where('msg','')->order('id')->paginate(10);
+        $result = $model->where('date','<',DATE('2019-12-01'))->where('status',0)->where('msg','')->order('id')->paginate(10);
         // dump($result);
         $this->assign('model',$model);
         $this->assign('list',$result);
@@ -630,18 +774,22 @@ class Info extends controller
     }
     //检验发票
     public function checkInvoice()
-    {   
+    {
+
         ini_set('max_execution_time',0);
         $invoice = new Invoices;
-        // $sql = "select * from info_invoice where status=0 and date<DATE_SUB(NOW(),INTERVAL 1 DAY) and msg='' limit 20";
-        $sql = "select * from info_invoice where status=0 and date<DATE_SUB(NOW(),INTERVAL 1 DAY) order by add_time desc limit 30";
-        // $sql = "select * from info_invoice where id=16195";
+//         $sql = "select * from info_invoice where status=0 and date<DATE_SUB(NOW(),INTERVAL 1 DAY) and msg='' limit 20";
+        $sql = "select * from info_invoice where status=0  and add_time>DATE_SUB(NOW(),INTERVAL 3 DAY)  order by add_time desc limit 30";
+//         $sql = "select * from info_invoice where id=34329";
         $unresult = $invoice->query($sql);
         $length = count($unresult);
         if (!$unresult) {
             return $this->success('數據不存在！');
         }
+
         foreach ($unresult as $key => $value) {
+//            echo json_encode($value);
+//            exit();
             $url = 'https://api.devsg.openlife.co/v3/invoice/query';
             $time = strtotime($value['date']);
             $post_data = [
@@ -649,16 +797,23 @@ class Info extends controller
                 'barcode'=>(substr($value['date'], 0, 4)-1911).substr($value['date'], 5, 2).$value['no1'].$value['no2'].$value['code'].'38582646',
                 'datetime'=>date('Y-m-d H:i:s'),
             ];
+
             $str = str_replace('+', '%20', http_build_query($post_data));
             $signature = base64_encode(hash_hmac('sha256', $str, '817c60bb8f5f4a1ba20f40bc631b571aa8774b6e0e1e', true));
+//            exit($signature);
             $headers = array(
                 "Content-type: application/json",
                 'vendor: COTTONFIELD',
                 'signature: '.$signature,
             );
+
+//           var_dump($headers); exit();
             $result0 = $this->curl_request($url, json_encode($post_data), $headers);
-            if (!$unresult) {
-                return $this->success('數據不存在！');
+//            return $this->error2('異常，沒收到api數據',$result0);
+//            echo $result0;
+//            exit();
+            if (!$result0) {
+                return $this->error('數據不存在！',null,$value['id']);
             }
             $result = json_decode($result0,true);
             // dump($result);
@@ -667,39 +822,44 @@ class Info extends controller
                     if ($value['money'] == $result['data']['totalAmount']) {
                         $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>1,'msg'=>'']);
                     }else{
-                        $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>2,'msg'=>$result['data']['code'].':'.$result['data']['msg'].'---輸入發票與實際發票金額不符']);
+                        $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>2,'msg'=>'您輸入的發票與實際發票金額不符']);
                     }
                 }else{
-                    $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>0,'msg'=>$result['data']['code'].':-'.$result['data']['msg']]);
+                    $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>0,'msg'=>$result['data']['msg']]);
                 }
             }elseif($result['error']==400 && in_array($result['message'], ['此非棉花田發票','目前查無此發票資訊，請確認輸入資料是否正確'])){
                 $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>2,'msg'=>$result['message']]);
             }elseif($result['error']==9002){
                 $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>0,'msg'=>$result['message']]);
 			}elseif($result['error']==9001){
-                $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>1,'msg'=>$result['message']]);
+                $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>2,'msg'=>$result['message']]);
             }else{
-                $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>2,'msg'=>$result['error'].'--'.$result['message']]);
+                $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>2,'msg'=>$result['message']]);
             } 
         }
-        // return $this->success('校驗成功！');
-        $this->checkInvoice();
+         return $this->success('校驗成功！');
+//        return '成功';
+//        $this->checkInvoice();
     }
 
 
     public function checkInvoice1()
-    {   
+    {
+
         ini_set('max_execution_time',0);
         $invoice = new Invoices;
         // $sql = "select * from info_invoice where status=0 and date<DATE_SUB(NOW(),INTERVAL 1 DAY) and msg='' limit 20";
         // $sql = "select * from info_invoice where status=0 and date<DATE_SUB(NOW(),INTERVAL 1 DAY) and msg='' order by add_time desc limit 5";
-        $sql = "select * from info_invoice where status=0 order by add_time limit 10";
-        // $sql = "select * from info_invoice where id=16119";
+//        $sql = "select * from info_invoice where status=0 order by add_time limit 10";
+        $sql = "select * from info_invoice where status=0 and add_time>DATE_SUB(NOW(),INTERVAL 3 DAY)  order by add_time desc limit 30";
+
+//        $sql = "select * from info_invoice where id=34338";
         $unresult = $invoice->query($sql);
-        dump($unresult);
+//        dump($unresult);
         $length = count($unresult);
         if (!$unresult) {
-            return $this->success('數據不存在！');
+            Db::table('logs')->insert(['msg'=>'數據不存在！','add_time'=>date('Y-m-d H:i:s')]);
+            return $this->success2('數據不存在！');
         }
         foreach ($unresult as $key => $value) {
             $url = 'https://api.devsg.openlife.co/v3/invoice/query';
@@ -718,10 +878,11 @@ class Info extends controller
             );
             $result0 = $this->curl_request($url, json_encode($post_data), $headers);
             if (!$result0) {
-                return $this->error('異常，沒收到api數據');
+                Db::table('logs')->insert(['msg'=>'異常，沒收到api數據','add_time'=>date('Y-m-d H:i:s')]);
+                return $this->error2('異常，沒收到api數據');
             }
             $result = json_decode($result0,true);
-            dump($result);
+
             if($result['error']==0){
                 if(($result['data']['code'])=='200'){
                     if ($value['money'] == $result['data']['totalAmount']) {
@@ -740,7 +901,9 @@ class Info extends controller
                 $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>2,'msg'=>$result['error'].'--'.$result['message']]);
             } 
         }
-        // return $this->success('校驗成功！');
+        Db::table('logs')->insert(['msg'=>'成功','add_time'=>date('Y-m-d H:i:s')]);
+        return $this->success2('校驗成功！');
+
         // $this->checkInvoice();
     }
 
@@ -768,21 +931,37 @@ class Info extends controller
         curl_close($ch);  
         return $file_contents;  
     }
-
+    //先过滤掉不是活动日期内的
     public function errorivodel()
     {
-        $result = (new Invoices)->query("select * from info_invoice where date < DATE('2018-12-26')");
-        if (!$result) {
-            return $this->success('數據不存在！');
+        //驗證11號之前的
+        $result = (new Invoices)->query("select * from info_invoice where status=0 and date < DATE('2019-11-1')");
+        $result1 = (new Invoices)->query("select * from info_invoice where status=0 and  add_time<DATE_SUB(NOW(),INTERVAL 3 DAY)");
+
+        if (!$result && !$result1) {
+            return $this->success2('數據不存在！');
         }
         foreach ($result as $key => $value) {
             (new Coupons)->where('in_id',$value['id'])
                         ->where('uid',$value['uid'])
-                        ->where('type_id','<',12)
+                        ->where('type_id','>',19)
                         ->update(['status'=>3]);
-            (new Invoices)->where('id',$value['id'])->update(['status'=>2,'msg'=>"12/26以前的發票!"]);
+            (new Invoices)->where('id',$value['id'])->update(['status'=>2,'msg'=>"您輸入的發票非符合活動期間之發票"]);
         }
-        return $this->success('操作成功！');
+//        //驗證3天後的
+//        if (!$result1) {
+//            return $this->success2('數據不存在！');
+//        }
+        foreach ($result1 as $key => $value) {
+            (new Coupons)->where('in_id',$value['id'])
+                ->where('uid',$value['uid'])
+                ->where('type_id','>',19)
+                ->update(['status'=>3]);
+            (new Invoices)->where('id',$value['id'])->update(['status'=>2,'msg'=>"查無此發票資訊，請確認您輸入的發票資料是否正確"]);
+        }
+
+        Db::table('logs')->insert(['msg'=>'過濾成功','add_time'=>date('Y-m-d H:i:s')]);
+        return $this->success2('操作成功！');
     }
 
 
@@ -805,6 +984,4 @@ class Info extends controller
       }  
 
 
-	  
-    
 }

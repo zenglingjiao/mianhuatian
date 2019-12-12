@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh=TW">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, initial-scale=1.0, user-scalable=no">
+      <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <!--上線後刪除此段Meta與註解-->
+    <meta name="robots" content="noindex, nofollow,noarchive,nosnippet,noimageindex,noodp">
+    <!-- End 測試站防止被爬蟲搜尋-->
+    <title>查詢記錄 | 棉花田</title>
+
+
+    <!-- Bootstrap core CSS -->
+   <link href="/assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+   <link href="/assets/css/animate.css" rel="stylesheet">
+   <link href="/assets/libs/datepicker/css/datepicker.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="/assets/css/index.css?1.0" rel="stylesheet">
+    <link href="/assets/css/index_mobel.css?1.0" rel="stylesheet">
+  </head>
+  <body>
+  {include file="header" /}
+
+<div class="main-wrapper">
+
+    {include file="aside" /}
+
+
+    
+    <section class="conner_wrapper spe-wrapper" id="quey">
+        <div class="conner_bg pt-md-5">
+            <div class="hi_conner_bg pt-md-5">
+                <div class="container">
+                    <div class="hi_box ">
+                        <h2 class="h-title hi"><img src="/assets/images/hi_tice.png" /> 查詢紀錄</h2>
+                        <div class="block prize1">
+                           <div class="h_box top_p active">
+                            <div class="f_box d-flex justify-content-center align-items-center h-100">
+                                <div class=" text-center ">
+                                    <h3>請先登入會員才能查詢抽獎紀錄喔！</h3>
+                                </div>
+
+                            </div>
+                        </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    
+
+
+
+
+
+    
+    <!--抽獎demo-->
+    <div class="modal fade"  id="luck" data-backdrop="static">
+      <div class="modal-dialog cottonfeild  modal-md modal-dialog-popout " >
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <img src="/assets/images/close.png" />
+            </button>
+          </div>
+          <div class="modal-body">
+              <h3 class="model_title">恭喜您抽到了<span>指定商品加價購</span></h3>
+                <img src="/assets/images/tbtj.png" class="img-fluid" />
+                <div class="ad_title">活動抽獎序號將於隔日中午 12 時顯示，請稍候！</div>
+                <h4 class="list"><img src="/assets/images/101.png" width="40"  style="margin-right:10px;" />注意事項：</h4>
+                <p>1. 本抵用券、兌換券序號使用期限至2019/2/19，逾期恕無法兌換，每券限使用乙次。</p>
+                <p>2. 加價購商品序號使用期限至2019/2/19，逾期恕無法兌換，每券限使用乙次。</p>
+                <h4 class="list"><img src="/assets/images/102.png" width="40"  style="margin-right:10px;"  />使用方式：</h4>
+                <p>1. 本券須於下一筆消費使用，恕不兌換現金或找零，也不列入會員消費累積。</p>
+                <p>2. 本序號券不限門市使用，僅限於棉花田實體門市使用。</p>
+                <p>3. 商品退貨或取消交易時，現金抵用券及加價商品序號恕不退還，若造成困擾敬請見諒。</p>
+                <p>&nbsp;</p>
+                <div class="row">
+                    <div class="col-6"><button type="button" class="btn btn-block btn-lg btn-again" data-dismiss="modal" aria-label="Close">繼續抽紅包</button></div>
+                    <div class="col-6"><button type="button" class="btn btn-block btn-lg btn-alert">立即使用</button></div>
+                </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    
+     <!--注意事項demo-->
+    <div class="modal fade"  id="attention" data-backdrop="static">
+      <div class="modal-dialog cottonfeild modal-lg modal-dialog-popout" >
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <img src="/assets/images/close.png" />
+            </button>
+          </div>
+          <div class="modal-body">
+              <h3 class="model_title">注意事項</h3>
+              <p>1. 欲參加抽獎活動不同張發票恕不累積發票金額。</p>
+              <p>2. 本抵用券、兌換券序號使用期限至 2019/2/19，逾期恕無法兌換，每券限使用乙次。</p>
+              <p>3. 加價購商品序號使用期限至 2019/2/19，逾期恕無法兌換，每券限使用乙次本券須於下壹筆消費使用，恕不兌換現金或找零，也不列入會員消費累積。</p>
+              <p>4. 本序號券不限門市使用，僅限於棉花田實體門市使用。</p>
+              <p>5. 本券壹經使用不得退換或要求補發，抵用券/兌換券/加價購商品序號，數量有限，送/售完為止。</p>
+              <p>6. 基於個人資料保護法保護個資原則，棉花田生機園地絕不外洩參與活動者之個人資料。惟活動者於參加本活動前了解並同意主辦單位於本活動之範圍內，得蒐集、處理及利用本人之個人資料(包括但不限於姓名、e-mail、手機、會員卡號等)。</p>
+              <p>7. 活動辦法若有未盡事宜，棉花田保有隨時解釋、變更活動辦法與獎品內容，以及暫停、延長、提前終止本活動之權利。並公告於本公司活動網站，將不另行通知。</p>
+              <p>&nbsp;</p>
+              <p>與我們聯繫：</p>
+              <p>客服信箱：sun@oneness.tw。</p>
+              <p>客服專線：0800-559-588。</p>
+              <p>服務時間週一 ~ 週五 08:30 ~ 17:30</p>
+              <div class="modal-header"></div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+      
+</div>
+
+
+
+
+    <footer>
+        <div class="container">
+            <p>版權所有 棉花田生機園地股份有限公司</p>
+            <p>© 2019 Cotton Field Organic Co.,Ltd. All Rights Reserved</p>
+            <p>客服專線：0800-559-588</p>
+        </div>
+    </footer>
+
+
+
+
+    <script type="text/javascript" src="/assets/js/vendor/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/assets/bootstrap/js/popper.min.js"></script>
+    <script type="text/javascript" src="/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/assets/libs/datepicker/js/datepicker.min.js"></script>
+    <script type="text/javascript" src="/assets/libs/datepicker/js/datepicker.zh.min.js"></script>
+    <script type="text/javascript" src="/assets/js/wow.min.js"></script>
+
+    <script type="text/javascript" src="/assets/js/all.js?1.0"></script>
+    {include file="footer" /}
+     <script>
+         $(document).ready(function(){
+             $('.datepicker-here').datepicker({ autoClose:true, });
+         })
+     </script>
+  </body>
+</html>

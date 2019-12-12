@@ -89,4 +89,41 @@ class Coupons extends BaseModel
     ];
 
     public $status_arr = ['0'=>'未領取','1'=>'已領取','2'=>'已使用','3'=>'發票錯誤'];
+    // 获取器【invoice】
+    public function getInvoiceAttr($value, $data)
+    {
+         return (new Invoices)->getOne(['id'=>$data['in_id']]);
+
+    }
+    // 获取器【address_info】
+    public function getCateTypeAttr($value, $data)
+    {
+        return (new InfoCateTypes)->getOne(['id'=>$data['type_id']]);
+
+    }
+    public function getA($uid,$field='no')
+    {
+        $user = (new Coupons)->getAll(['in_id'=>$uid]);
+
+        if(!$user)  return [];
+        else        return $user;
+    }
+    // 查询全部(含分页)
+    public function getAll1($where = [], $page_num = '', $page_limit = '')
+    {
+
+        if ($page_num && $page_limit) {
+            $data = $this->where($where)->order('get_time desc,id desc')->page($page_num, $page_limit)->select();
+        } else {
+            $data = $this->where($where)->order('get_time desc,id desc')->select();
+        }
+
+        foreach ($data as $key => $value) {
+            $data[$key]['invoice'] = '';
+            $data[$key]['cate_type'] = '';
+
+        }
+
+        return $data;
+    }
 }

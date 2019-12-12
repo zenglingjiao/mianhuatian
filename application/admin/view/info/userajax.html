@@ -2,7 +2,7 @@
             <thead>
             <tr>
               <th>NO</th>
-              <th>會員卡號</th>
+              <th>會員生日</th>
               <th>手機</th>
               <th>優惠劵</th>
               <th>發票</th>
@@ -25,6 +25,7 @@
               </td>
               <td>
                 <a href="javascript:void(0);" onclick="isdel2('您確定要刪除這項嗎？','{:url($_c.'/userlistajaxDel',['id'=>$vo['id']])}',this);">刪除</a>&nbsp;&nbsp;  
+                <a href="javascript:void(0);" onclick="diag('{$vo['id']}')">重置生日</a>&nbsp;&nbsp;
               </td>
             </tr>
             {/foreach}
@@ -45,6 +46,47 @@
         </div>
 
         <script type="text/javascript">
+            //修改生日
+            function diag(value)
+            {
+                console.log(value);
+                var str=prompt("請輸入生日（6碼）","");
+                if(str){
+                    var filter = /^\d{6}$/;
+                    if (!filter.test(str)) {
+                        if (str == "") {
+                            alert("不能為空");
+                        } else {
+                            alert("請輸入6位數字");
+                        }
+                        return false;
+                    }
+                      $.ajax({
+                         // async: true,
+                         type: 'get',
+                         dataType: 'json',
+                         data:  {
+                             id:value,
+                             cardno:str
+                         },
+                         url: '{:url($_c.'/reset_pwd')}',
+                         success: function (res) {
+                             if(res.code){
+                                 alert(res.msg);
+                                 window.location.reload();
+                             }else{
+                                 alert(res.msg);
+                             }
+                             // app.column = res.data[0];
+                         },
+                         error: function (res) {
+                             console.log(res);
+                         }
+                     });
+
+                }
+            }
+
     function isdel2(str, url, dom) {
         layer.confirm(str, {
             btn: ['确定', '取消'] //按钮

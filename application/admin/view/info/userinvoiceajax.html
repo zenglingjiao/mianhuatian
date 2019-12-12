@@ -9,6 +9,7 @@
               <th>金額</th>
               <th>狀態</th>
               <th>描述</th>
+              <th>序號</th>
               <th>操作</th>
             </tr>
             </thead>
@@ -17,14 +18,19 @@
             {foreach $list as $vo}
             <tr>
               <td>{$vo.id}</td>
-              <td>{$users->getF($vo['uid'],'cardno')}</td>
+              <td>{$users->getP($vo['uid'],'phone')}</td>
               <td>{$vo.no1}-{$vo.no2}</td>
               <td>{$vo.date}</td>
               <td>{$vo.code}</td>
               <td>{$vo.money}</td>
               <td>{$model->status_arr[$vo.status]}</td>
               <td>{$vo.msg}</td>
-              <td> 
+              <td>
+                  {foreach $coupons->getA($vo['id'],'no') as $ao}
+                    {$ao.no}<br>
+                  {/foreach}
+              </td>
+              <td>
                   <a href="javascript:void(0);" onclick="isdel2('您確定要刪除這項嗎？','{:url($_c.'/userinvoiceajaxDel',['id'=>$vo['id']])}',this);"><i class="fa fa-trash-o"></i> 刪除</a>
               </td>
             </tr>
