@@ -453,6 +453,12 @@
                      return false;
                  }
                  date = $("input[name=date]").val();
+
+                 if(date < '2019/11/01'){
+                     alert("您輸入的發票非符合活動期間之發票");
+                     $("input[name=date]").focus();
+                     return false;
+                 }
                  if(date==''){
                      alert("發票資訊不全,請輸入日期");
                      $("input[name=date]").focus();

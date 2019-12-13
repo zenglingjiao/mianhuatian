@@ -218,26 +218,31 @@ class Info extends controller
         else                $this->error('修改失敗！');
     }
 
-	//刪除
+	//刪除錯誤發票
      public function userinvoiceajaxDel() {
         $id = $this->request->param('id',0,'intval');
         $model = Invoices::get($id);
         if(!$model)     $this->success('數據不存在！');
 
-
+//         $data=(new Coupons)->getAll(['in_id'=>$id,'type_id'=>['>',19]]);
+         $data=Db::table('info_coupon')->where('in_id',$id)->where('type_id','>',19)->select();
+//         var_dump(json_encode((new Coupons)->getLastSql()));exit();
+         foreach ($data as $key =>$value){
+             $qqq=[
+                 'status'=>0,
+                 'uid'=>0,
+                 'get_time'=>0,
+                 'use_time'=>0,
+                 'in_id'=>0,
+             ];
+             $res=(new Coupons)->allowField(true)->save($qqq,['id'=>$value['id']]);
+             if(!$res){
+                 $this->error('操作錯誤：' . $res);
+             }
+         }
          $result = $model->delete();
         if($result) {
-            $data=Db::table('info_coupon')->where('in_id',$id)->where('type_id','<',12)->select();
-            foreach ($data as $key =>$value){
-                $qqq=[
-                    'status'=>0,
-                    'uid'=>0,
-                    'get_time'=>0,
-                    'use_time'=>0,
-                    'in_id'=>0,
-                ];
-                (new Coupons)->allowField(true)->save($qqq,['id'=>$value['id']]);
-            }
+
             $this->success('操作成功！');
         } else {
             $this->error('操作錯誤：' . $result);
@@ -779,7 +784,7 @@ class Info extends controller
         ini_set('max_execution_time',0);
         $invoice = new Invoices;
 //         $sql = "select * from info_invoice where status=0 and date<DATE_SUB(NOW(),INTERVAL 1 DAY) and msg='' limit 20";
-        $sql = "select * from info_invoice where status=0  and add_time>DATE_SUB(NOW(),INTERVAL 3 DAY)  order by add_time desc limit 30";
+        $sql = "select * from info_invoice where status=0  and add_time>DATE_SUB(NOW(),INTERVAL 3 DAY)  order by update_time  limit 30";
 //         $sql = "select * from info_invoice where id=34329";
         $unresult = $invoice->query($sql);
         $length = count($unresult);
@@ -822,18 +827,22 @@ class Info extends controller
                     if ($value['money'] == $result['data']['totalAmount']) {
                         $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>1,'msg'=>'']);
                     }else{
+                        (new Coupons)->where('in_id',$unresult[$key]['id'])->where('uid',$unresult[$key]['uid'])->where('type_id','>',19)->update(['status'=>3]);
                         $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>2,'msg'=>'您輸入的發票與實際發票金額不符']);
                     }
                 }else{
                     $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>0,'msg'=>$result['data']['msg']]);
                 }
             }elseif($result['error']==400 && in_array($result['message'], ['此非棉花田發票','目前查無此發票資訊，請確認輸入資料是否正確'])){
+                (new Coupons)->where('in_id',$unresult[$key]['id'])->where('uid',$unresult[$key]['uid'])->where('type_id','>',19)->update(['status'=>3]);
                 $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>2,'msg'=>$result['message']]);
             }elseif($result['error']==9002){
                 $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>0,'msg'=>$result['message']]);
 			}elseif($result['error']==9001){
+                (new Coupons)->where('in_id',$unresult[$key]['id'])->where('uid',$unresult[$key]['uid'])->where('type_id','>',19)->update(['status'=>3]);
                 $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>2,'msg'=>$result['message']]);
             }else{
+                (new Coupons)->where('in_id',$unresult[$key]['id'])->where('uid',$unresult[$key]['uid'])->where('type_id','>',19)->update(['status'=>3]);
                 $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>2,'msg'=>$result['message']]);
             } 
         }
@@ -851,7 +860,7 @@ class Info extends controller
         // $sql = "select * from info_invoice where status=0 and date<DATE_SUB(NOW(),INTERVAL 1 DAY) and msg='' limit 20";
         // $sql = "select * from info_invoice where status=0 and date<DATE_SUB(NOW(),INTERVAL 1 DAY) and msg='' order by add_time desc limit 5";
 //        $sql = "select * from info_invoice where status=0 order by add_time limit 10";
-        $sql = "select * from info_invoice where status=0 and add_time>DATE_SUB(NOW(),INTERVAL 3 DAY)  order by add_time desc limit 30";
+        $sql = "select * from info_invoice where status=0 and add_time>DATE_SUB(NOW(),INTERVAL 3 DAY)  order by update_time  limit 30";
 
 //        $sql = "select * from info_invoice where id=34338";
         $unresult = $invoice->query($sql);
@@ -888,17 +897,20 @@ class Info extends controller
                     if ($value['money'] == $result['data']['totalAmount']) {
                         $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>1,'msg'=>'']);
                     }else{
-                        $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>2,'msg'=>$result['data']['code'].':'.$result['data']['msg'].'---輸入發票與實際發票金額不符']);
+                        (new Coupons)->where('in_id',$unresult[$key]['id'])->where('uid',$unresult[$key]['uid'])->where('type_id','>',19)->update(['status'=>3]);
+                        $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>2,'msg'=>'您輸入的發票與實際發票金額不符']);
                     }
                 }else{
-                    $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>0,'msg'=>$result['data']['code'].':-'.$result['data']['msg']]);
+                    $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>0,'msg'=>$result['data']['msg']]);
                 }
             }elseif($result['error']==400 && in_array($result['message'], ['此非棉花田發票','目前查無此發票資訊，請確認輸入資料是否正確'])){
+                (new Coupons)->where('in_id',$unresult[$key]['id'])->where('uid',$unresult[$key]['uid'])->where('type_id','>',19)->update(['status'=>3]);
                 $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>2,'msg'=>$result['message']]);
             }elseif($result['error']==9002){
                 $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>0,'msg'=>$result['message']]);
             }else{
-                $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>2,'msg'=>$result['error'].'--'.$result['message']]);
+                (new Coupons)->where('in_id',$unresult[$key]['id'])->where('uid',$unresult[$key]['uid'])->where('type_id','>',19)->update(['status'=>3]);
+                $do = $invoice->allowField(true)->where('id',$unresult[$key]['id'])->update(['status'=>2,'msg'=>$result['message']]);
             } 
         }
         Db::table('logs')->insert(['msg'=>'成功','add_time'=>date('Y-m-d H:i:s')]);

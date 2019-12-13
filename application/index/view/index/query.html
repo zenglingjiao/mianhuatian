@@ -86,12 +86,12 @@
                                                     <button type="button" onclick="jjg({$vo.id})"  class="btn btn-block btn-lg btn-alert">確定使用</button>
                                                 {else /}
                                                     {if  $vo.invoice.msg == ''}
-                                                        <div class="label_box label_r">活動抽獎序號將於隔日中午 12 時顯示，請稍候！</div>
+                                                        <div class="label_box label_r">尚待資料傳輸中，活動抽獎序號請於隔日中午12時查看!</div>
                                                     {else /}
                                                         {if  $vo.invoice.add_time <= $date_time}
                                                             <div class="label_box label_h">尚待財政部資料傳輸中，請稍後！</div>
                                                         {else /}
-                                                            <div class="label_box label_r">活動抽獎序號將於隔日中午 12 時顯示，請稍候！</div>
+                                                            <div class="label_box label_r">尚待資料傳輸中，活動抽獎序號請於隔日中午12時查看!</div>
                                                         {/if}
                                                     {/if}
                                                 {/if}
@@ -107,9 +107,17 @@
                                         <button type="button" class="btn btn-block btn-lg btn-alert disabled">已使用</button>
                                         {elseif $vo.status==3/}
                                         <!--错误发票-->
-                                        <div class="disno">
-                                            發票錯誤！！
-                                        </div>
+                                            {if $vo.cate_type.time_limit == 2}
+                                                <div class="xh" onclick="qrcode({$vo})">
+                                                    <div>序號：{$vo.no}</div>
+                                                    <img src="{$vo.qrcode}" class="determine"/>
+                                                </div>
+                                                <button type="button" onclick="jjg({$vo.id})" class="btn btn-block btn-lg btn-alert">確定使用</button>
+                                            {else /}
+                                                <div class="disno">
+                                                    {$vo.invoice.msg}
+                                                </div>
+                                            {/if}
                                         {/if}
                                     </div>
                                 </div>
@@ -355,7 +363,7 @@
              $('.datepicker-here').datepicker({ autoClose:true, });
          })
          function jjg(value) {
-             var r=confirm("您是否確定要使用此票卷，一經按確定送出，即無法退回票卷。")
+             var r=confirm("您是否確定要使用此票劵，一經按確定送出，即無法退回票卷。")
              if (r==true)
              {
                  console.log(value);

@@ -231,6 +231,10 @@ class Index extends controller
                     $this->error2('操作失敗'); 
                 }
             }
+            //验证是否本人使用
+            if($this->view->uid != $one['uid']){
+                $this->error2('該發票已被別人使用');
+            }
             //驗證其他欄目
             if($one->date != $data['date'] || $one->code != $data['code'] || $one->money != $data['money']){
                 $this->error2('發票資訊不符，請確認您輸入的發票資訊是否正確');
@@ -241,9 +245,6 @@ class Index extends controller
             //未抽完的發票
             if ($one->remain_times > 0) {
                 $data['uid'] = $this->view->uid;
-                if($this->view->uid != $one['uid']){
-                    $this->error2('該發票已被別人使用');
-                }
                 $award = $one->total_times;
                 $limit = $one->remain_times;
                 session('award',$award);
@@ -315,7 +316,8 @@ class Index extends controller
 
         $couGroup = (new Coupons)->getGroup(['group'=>'type_id','field'=>'type_id,count(id) as num','status'=>'0']);
         $couGroup = array_reset($couGroup,'type_id','num');
-        // var_dump($couGroup);
+//         var_dump((new Coupons)->getLastSql());exit();
+//                 var_dump(json_encode($couGroup));exit();
 
         // 抽獎--確定獎品分類
         $num = $num2 = $type_id = $rand = 0;
@@ -325,6 +327,7 @@ class Index extends controller
             if(isset($couGroup[$k]))    $num += $v;
         }
         $rand = rand(0,$num);
+//        var_dump();
         foreach ($infocatetypes as $k => $v) {
             if(isset($couGroup[$k])){
                 $num2 += $v;
@@ -337,9 +340,15 @@ class Index extends controller
 
         // 抽獎--確定獎品--按順序
         $info = (new Coupons)->getOne(['type_id'=>$type_id,'status'=>0]);
+
+
 //        exit(json_encode($types));
-        if(!$info)                  $this->error2('獎品不存在');
-        
+        if(!$info){
+//            var_dump((new Coupons)->getLastSql());exit();
+            $this->error2('獎品不存在');
+        }
+//        var_dump($rand.''.$num);exit();
+
         $limit--;
         session('limit',$limit);
         $update = (new Invoices)->where('id',$in_id)->update(['remain_times'=>$limit]);
@@ -355,12 +364,14 @@ class Index extends controller
         $id = $this->request->param('id','','strval');
 
         $info = (new Coupons)->getOne(['id'=>$id]);
+        $cate_type=(new InfoCateTypes)->getOne(['id'=>$info['type_id']]);
         // var_dump($info);exit();
         if(!$info)                              $this->error2('獎項不存在');
 //        if($info['uid']!=$this->view->uid)      $this->error2('獎項不存在');
         if($info['status']==2)                  $this->error2('獎項已使用');
-        if($info['status']==3)                  $this->error2('發票錯誤');
-
+        if($cate_type['time_limit'] != 2) {
+            if ($info['status'] == 3) $this->error2('發票錯誤');
+        }
 //        $list_cate = (new InfoCateTypes)->getMap2();
 //        if( $list_cate[$info['type_id']]['time_limit']==1 && $info['get_time']+86400>time())      $this->error2('獎項還在凍結中');
 
