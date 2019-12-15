@@ -345,7 +345,7 @@ class Index extends controller
 //        exit(json_encode($types));
         if(!$info){
 //            var_dump((new Coupons)->getLastSql());exit();
-            $this->error2('獎品不存在');
+            $this->error2('系統發生錯誤，請重新再抽一次');
         }
 //        var_dump($rand.''.$num);exit();
 

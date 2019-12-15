@@ -92,7 +92,6 @@ $(document).ready(function () {
         } else {
             $(".ad_title").hide();
         }
-        $('#luck').modal('show');
     });
 
 

@@ -175,7 +175,7 @@
           <div class="modal-body">
               <h3 class="model_title">恭喜您抽到了<span>{{type.title}}</span></h3>
                 <img :src="type.img" class="img-fluid" />
-                <div class="ad_title1" v-if="type.time_limit == 1">活動抽獎序號將於隔日中午 12 時顯示，請稍候！</div>
+                <div class="ad_title1" v-if="type.time_limit == 1">尚待資料傳輸中，活動抽獎序號請於隔日中午12時查看!</div>
                 <h4 class="list"><img src="/assets/images/101.png" width="40"  style="margin-right:10px;" />注意事項：</h4>
                 {{type.desc}}
                 <h4 class="list"><img src="/assets/images/102.png" width="40"  style="margin-right:10px;"  />使用方式：</h4>
@@ -275,10 +275,14 @@
                              if(res.code==1){
                                  app.type=res.data.type;
                                  app.limit -=1;
+                                 $('#luck').modal('show');
+
                              }else {
                                  alert(res.msg);
-                                 document.getElementById('luck').style.visibility="hidden";
                                  document.location.href='{:url('index/red_env')}';
+
+                                 // return false;
+                                 // document.getElementById('luck').style.visibility="hidden";
                              }
                              console.log(res);
                              // app.column = res.data[0];

@@ -11,7 +11,7 @@ class Invoices extends BaseModel
     protected $pk = 'id';
     protected $table = 'info_invoice';
     protected $order = 'id desc';
-
+    protected $updateTime = 'update_time';
     protected $readonly = ['id'];
     protected $type = [
         'id'    =>  'integer',
