@@ -116,8 +116,8 @@
                                 <div class="p_img">
                                     <img src="/assets/images/cp6.png" />
                                 </div>
-                                <h2>棉花田禮券<span class="label label-info">3 名</span></h2>
-                                <p>$1,000 元</p>
+                                <h2>棉花田禮券<span class="label label-info">1 名</span></h2>
+                                <p>$3,000 元</p>
                             </div>
                             <div class="col-md-4 wow fadeInUp" data-wow-delay="0.6s">
                                 <div class="p_img">
@@ -130,8 +130,8 @@
                                 <div class="p_img">
                                     <img src="/assets/images/cp8.png" />
                                 </div>
-                                <h2>棉花田禮券<span class="label label-info">1 名</span></h2>
-                                <p>$3,000 元</p>
+                                <h2>棉花田禮券<span class="label label-info">3 名</span></h2>
+                                <p>$1,000 元</p>
                             </div>
                         </div>
 
@@ -466,15 +466,13 @@
                  }
 
                  code = $("input[name=code]").val();
-                 var filter = /^\d{4}$/;
-                 if (!filter.test(code)) {
-                     if(code== ""){
-                         alert("發票資訊不全,請輸入發票隨機碼");
-                     }else {
+                 if(code != ""){
+                     var filter = /^\d{4}$/;
+                     if (!filter.test(code)) {
                          alert("請輸入您的發票隨機碼(4碼為數字)");
+                         $("input[name=code]").focus();
+                         return false;
                      }
-                     $("input[name=code]").focus();
-                     return false;
                  }
                  money = $("input[name=money]").val();
                  var filter = /^[1-9]\d*$/;

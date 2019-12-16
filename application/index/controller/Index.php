@@ -183,6 +183,7 @@ class Index extends controller
     //登入发票
     public function enter()
     {
+//        return;
 //        echo 11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111;
 //        return $this->fetch('index');
         /*$award = session('award');
@@ -226,6 +227,8 @@ class Index extends controller
                     session('code',!empty($data['code']));
                     session('in_id',$info->id);
 //                    return $this->fetch('award');
+//                   $this->error2(session('code'));
+
                     $this->success2('發票資訊輸入完成，立即抽紅包！',['award'=>$data['remain_times'],'limit'=>$data['remain_times']]);
                 }else{
                     $this->error2('操作失敗'); 
@@ -265,8 +268,9 @@ class Index extends controller
         if(!$this->view->uid) {   return $this->fetch('index');}
         $award = session('award');
         $limit = session('limit');
-        $code = session('code');
-        $in_id = session('in_id');
+//        $code = session('code');
+//        $in_id = session('in_id');
+//        $this->assign('code',$code);
         $this->assign('award',$award);
         $this->assign('limit',$limit);
         return $this->fetch();
@@ -296,6 +300,7 @@ class Index extends controller
     //抽獎
     public function award()
     {
+
         if(!$this->view->uid)       $this->error2('請先登入會員');
 
         $award = session('award');
@@ -312,7 +317,7 @@ class Index extends controller
         }
         $types = array_reset($infocatetypes,'id');
         $infocatetypes = array_reset($infocatetypes,'id','pro');
-        // var_dump($infocatetypes);
+//         var_dump(json_encode($infocatetypes));exit();
 
         $couGroup = (new Coupons)->getGroup(['group'=>'type_id','field'=>'type_id,count(id) as num','status'=>'0']);
         $couGroup = array_reset($couGroup,'type_id','num');
@@ -327,6 +332,9 @@ class Index extends controller
             if(isset($couGroup[$k]))    $num += $v;
         }
         $rand = rand(0,$num);
+        if($rand == $num && $rand !=0){
+            $rand--;
+        }
 //        var_dump();
         foreach ($infocatetypes as $k => $v) {
             if(isset($couGroup[$k])){
