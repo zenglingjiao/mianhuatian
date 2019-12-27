@@ -45,13 +45,18 @@
                 if(data.code==1){
                     console.log(data)
                     if(type==1) {
-                        $("input[name=type]").val(2);
-                        $('#phone1').hide();
-                        $('#classd1').hide();
-                        $('#cardno1').show();
-                        $('#recardno1').show();
-                        $('#fanl').show();
                         // alert(data.msg);
+                        var phone1=$("input[name=phone1]").val();
+                        if(window.confirm('請確認您輸入的電話號碼是否正確：'+phone1)){
+                            $("input[name=type]").val(2);
+                            $('#phone1').hide();
+                            $('#classd1').hide();
+                            $('#cardno1').show();
+                            $('#recardno1').show();
+                            $('#fanl').show();
+                        }else{
+                            return false;
+                        }
                     }else{
                         // alert(data.msg);
                         $('#form1').hide();
