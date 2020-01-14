@@ -784,8 +784,8 @@ class Info extends controller
         ini_set('max_execution_time',0);
         $invoice = new Invoices;
 //         $sql = "select * from info_invoice where status=0 and date<DATE_SUB(NOW(),INTERVAL 1 DAY) and msg='' limit 20";
-//        $sql = "select * from info_invoice where status=0  and add_time>DATE_SUB(NOW(),INTERVAL 3 DAY)  order by update_time  limit 120";
-         $sql = "select * from info_invoice where id=34350";
+        $sql = "select * from info_invoice where status=0  and add_time>DATE_SUB(NOW(),INTERVAL 3 DAY)  order by update_time  limit 120";
+//         $sql = "select * from info_invoice where id=34350";
         $unresult = $invoice->query($sql);
         // var_dump(json_encode($unresult));exit();
         $length = count($unresult);
