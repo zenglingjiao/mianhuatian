@@ -32,6 +32,9 @@
               </td>
               <td>
                   <a href="javascript:void(0);" onclick="isdel2('您確定要刪除這項嗎？','{:url($_c.'/userinvoiceajaxDel',['id'=>$vo['id']])}',this);"><i class="fa fa-trash-o"></i> 刪除</a>
+                  {if condition="$vo.status eq 2"}
+                  <a href="javascript:void(0);" onclick="isdel3('您確定要放行此發票之有價優惠券嗎?','{:url($_c.'/passValidation',['id'=>$vo['id']])}',this);"><i class="fa fa-play"></i> 放行</a>
+                  {/if}
               </td>
             </tr>
             {/foreach}
@@ -65,4 +68,19 @@
 
         });
     }
-        </script>
+    function isdel3(str, url, dom) {
+        layer.confirm(str, {
+            btn: ['确定', '取消'] //按钮
+        }, function () {
+            // window.location.href=url;
+            $.get(url, function (d) {
+                // alert(d.msg);
+                location.reload();
+                // layer.closeAll();
+                // window.parent.location.reload();
+            }, 'json');
+        }, function () {
+
+        });
+    }
+ </script>

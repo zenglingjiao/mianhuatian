@@ -248,6 +248,30 @@ class Info extends controller
             $this->error('操作錯誤：' . $result);
         }
     }
+    //放行发票
+     public function passValidation() {
+        $id = $this->request->param('id',0,'intval');
+        $model = Invoices::get($id);
+        if(!$model)     $this->success('數據不存在！');
+
+//         $data=(new Coupons)->getAll(['in_id'=>$id,'type_id'=>['>',19]]);
+         $data=Db::table('info_coupon')->where('in_id',$id)->where('type_id','>',19)->select();
+//         var_dump(json_encode((new Coupons)->getLastSql()));exit();
+         foreach ($data as $key =>$value){
+             $qqq=[
+                 'status'=>1,
+                 
+             ];
+             $res=(new Coupons)->allowField(true)->save($qqq,['id'=>$value['id']]);
+        }
+        $result=(new Invoices)->allowField(true)->save(['status'=>1,'msg'=>''],['id'=>$id]);
+        if($result) {
+
+            $this->success('操作成功！');
+        } else {
+            $this->error('操作錯誤：' . $result);
+        }
+    }
 
 
     public function userlistajaxDel() {
